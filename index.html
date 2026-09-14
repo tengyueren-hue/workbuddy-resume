@@ -1,0 +1,2192 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="任腾跃面向WorkBuddy智能体商业化产品经理的定向简历、岗位匹配、面试问答与能力补齐计划">
+  <title>任腾跃｜WorkBuddy 智能体商业化产品经理求职包</title>
+  <style>
+    :root {
+      --navy: #0b2f6b;
+      --blue: #1e5fae;
+      --blue-2: #e9f1fb;
+      --ink: #172033;
+      --body: #303b4f;
+      --muted: #68758a;
+      --line: #d8e0eb;
+      --paper: #ffffff;
+      --canvas: #edf1f6;
+      --green: #0d7b63;
+      --green-bg: #e9f7f2;
+      --amber: #9a6200;
+      --amber-bg: #fff6db;
+      --red: #a83c3c;
+      --red-bg: #fff0f0;
+      --shadow: 0 14px 38px rgba(24, 44, 78, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--body);
+      background: var(--canvas);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+        "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.68;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px max(20px, calc((100vw - 1180px) / 2));
+      color: #fff;
+      background: rgba(8, 31, 70, 0.96);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.16);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand {
+      min-width: 214px;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 16px;
+      letter-spacing: 0.02em;
+    }
+
+    .brand span {
+      color: #b9c9e3;
+      font-size: 12px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .nav-tabs button,
+    .print-button {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      padding: 8px 13px;
+      color: #dbe8fb;
+      background: rgba(255, 255, 255, 0.06);
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .nav-tabs button:hover,
+    .nav-tabs button.active {
+      color: #fff;
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .print-button {
+      flex: 0 0 auto;
+      color: #102e5b;
+      background: #fff;
+      border-color: #fff;
+      font-weight: 700;
+    }
+
+    .page-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 7px;
+      flex: 0 0 auto;
+    }
+
+    .action-button {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 8px 11px;
+      color: #dbe8fb;
+      background: rgba(255, 255, 255, 0.07);
+      cursor: pointer;
+      font-weight: 700;
+      transition: 0.18s ease;
+    }
+
+    .action-button:hover,
+    .action-button.active {
+      color: #102e5b;
+      background: #fff;
+      border-color: #fff;
+    }
+
+    .save-state {
+      min-width: 52px;
+      color: #b9c9e3;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    body.editing .view.active {
+      outline: 3px solid rgba(30, 95, 174, 0.28);
+      outline-offset: 8px;
+    }
+
+    body.editing .view.active [contenteditable="true"]:hover {
+      background: rgba(30, 95, 174, 0.055);
+    }
+
+    body.editing .view.active [contenteditable="true"]:focus {
+      outline: 2px solid rgba(30, 95, 174, 0.5);
+      outline-offset: 3px;
+      background: #fff;
+    }
+
+    .edit-tip {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 20;
+      max-width: 320px;
+      padding: 11px 14px;
+      color: #fff;
+      background: rgba(8, 31, 70, 0.94);
+      border-radius: 9px;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+    }
+
+    body.editing .edit-tip {
+      display: block;
+    }
+
+    main {
+      padding: 32px 20px 64px;
+    }
+
+    .view {
+      display: none;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .resume-stack {
+      display: grid;
+      gap: 24px;
+      justify-content: center;
+    }
+
+    .resume-page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 11mm 14mm 10mm;
+      color: #333d4d;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .resume-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 18px;
+      padding-bottom: 7px;
+      border-bottom: 3px solid var(--navy);
+    }
+
+    .resume-name-row {
+      display: flex;
+      align-items: baseline;
+      gap: 13px;
+    }
+
+    .resume-name {
+      margin: 0;
+      color: #101722;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 29pt;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.06em;
+    }
+
+    .target-title {
+      color: var(--navy);
+      font-size: 11pt;
+      font-weight: 800;
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      gap: 3px 18px;
+      color: #202938;
+      font-size: 8.6pt;
+      text-align: right;
+      line-height: 1.45;
+    }
+
+    .contact strong {
+      color: var(--navy);
+    }
+
+    .resume-section {
+      margin-top: 9px;
+    }
+
+    .resume-section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 5px;
+      color: var(--navy);
+      font-size: 12.3pt;
+      line-height: 1.25;
+      font-weight: 850;
+    }
+
+    .resume-section-title::after {
+      content: "";
+      height: 3px;
+      flex: 1;
+      margin-top: 3px;
+      background: linear-gradient(90deg, var(--navy) 0 21%, #dbe5f3 21% 100%);
+    }
+
+    .summary-box {
+      padding: 8px 10px;
+      background: #f4f7fb;
+      font-size: 9.4pt;
+      line-height: 1.62;
+    }
+
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+    }
+
+    .skill {
+      padding: 6px 7px;
+      background: #f5f7fa;
+      border: 1px solid #e5eaf1;
+      border-radius: 3px;
+      font-size: 8.6pt;
+      line-height: 1.45;
+    }
+
+    .skill b {
+      display: block;
+      margin-bottom: 1px;
+      color: var(--navy);
+      font-size: 9pt;
+    }
+
+    .job {
+      padding: 7px 0 8px;
+      border-bottom: 1px solid #d9dee7;
+    }
+
+    .job:last-child {
+      border-bottom: 0;
+    }
+
+    .job-head {
+      display: grid;
+      grid-template-columns: 118px 1fr auto;
+      align-items: baseline;
+      gap: 10px;
+      color: var(--navy);
+      font-size: 10.2pt;
+      line-height: 1.4;
+      font-weight: 850;
+    }
+
+    .job-head .role {
+      text-align: right;
+    }
+
+    .project-label {
+      display: inline-block;
+      margin: 5px 0 1px;
+      color: #18283f;
+      font-size: 9pt;
+      font-weight: 850;
+    }
+
+    .resume-list {
+      margin: 3px 0 0;
+      padding-left: 16px;
+      font-size: 9pt;
+      line-height: 1.58;
+    }
+
+    .resume-list li {
+      margin: 1.5px 0;
+      padding-left: 1px;
+    }
+
+    .resume-list strong {
+      color: #172236;
+    }
+
+    .metric {
+      color: var(--navy);
+      font-weight: 850;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 18px;
+    }
+
+    .project-list {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .past-list {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 9px;
+    }
+
+    .case-library {
+      display: grid;
+      gap: 12px;
+    }
+
+    .case-library details.qa summary {
+      align-items: center;
+    }
+
+    .case-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0 0 10px;
+    }
+
+    .case-meta span {
+      padding: 3px 8px;
+      color: var(--navy);
+      background: var(--blue-2);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .case-section {
+      margin: 10px 0;
+    }
+
+    .case-section strong:first-child {
+      color: var(--navy);
+    }
+
+    .mini-job {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mini-job h3 {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 0 3px;
+      color: var(--navy);
+      font-size: 9.8pt;
+      line-height: 1.4;
+    }
+
+    .mini-job p {
+      margin: 3px 0;
+      font-size: 8.8pt;
+      line-height: 1.58;
+    }
+
+    .project-card {
+      padding: 9px 10px;
+      border: 1px solid #d9e3f0;
+      border-radius: 4px;
+      background: #fbfdff;
+    }
+
+    .project-card h3 {
+      margin: 0 0 4px;
+      color: var(--navy);
+      font-size: 9.7pt;
+      line-height: 1.4;
+    }
+
+    .project-card p {
+      margin: 3px 0;
+      font-size: 8.7pt;
+      line-height: 1.57;
+    }
+
+    .project-card b {
+      color: #1b2638;
+    }
+
+    .education-row {
+      display: grid;
+      grid-template-columns: 128px 1fr auto;
+      gap: 14px;
+      color: #182236;
+      font-size: 9.3pt;
+      font-weight: 800;
+    }
+
+    .footnote {
+      margin-top: 9px;
+      color: #6f7887;
+      font-size: 7.4pt;
+      line-height: 1.5;
+    }
+
+    .content-shell {
+      overflow: hidden;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 38px 44px 32px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 92% 5%, rgba(70, 142, 229, 0.5), transparent 32%),
+        linear-gradient(135deg, #082759 0%, #0e3d7d 68%, #1457a8 100%);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #b9d5fb;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.2;
+    }
+
+    .hero p {
+      max-width: 850px;
+      margin: 14px 0 0;
+      color: #d9e7fb;
+      font-size: 16px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 20px;
+    }
+
+    .hero-meta span {
+      padding: 5px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      color: #ecf4ff;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 12px;
+    }
+
+    .content {
+      padding: 34px 44px 46px;
+    }
+
+    .content h2 {
+      margin: 32px 0 14px;
+      color: var(--navy);
+      font-size: 24px;
+      line-height: 1.3;
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+    }
+
+    .content h3 {
+      margin: 20px 0 8px;
+      color: #172a47;
+      font-size: 17px;
+    }
+
+    .callout {
+      margin: 16px 0;
+      padding: 14px 16px;
+      background: var(--blue-2);
+      border-left: 4px solid var(--blue);
+      border-radius: 7px;
+    }
+
+    .callout strong {
+      color: var(--navy);
+    }
+
+    .callout.amber {
+      background: var(--amber-bg);
+      border-left-color: #e2a72b;
+    }
+
+    .match-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin: 18px 0 24px;
+    }
+
+    .match-card {
+      position: relative;
+      min-height: 150px;
+      padding: 15px 13px 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .match-card.best {
+      border-color: #6ca7ea;
+      box-shadow: 0 8px 24px rgba(26, 91, 170, 0.14);
+    }
+
+    .match-card .rank {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+
+    .match-card h3 {
+      min-height: 48px;
+      margin: 5px 0 10px;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .score {
+      color: var(--navy);
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .score small {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .bar {
+      height: 6px;
+      margin: 10px 0 8px;
+      overflow: hidden;
+      background: #e9eef5;
+      border-radius: 999px;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, #1c5ca8, #57a3f3);
+    }
+
+    .match-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .evidence-table,
+    .gap-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .evidence-table th,
+    .evidence-table td,
+    .gap-table th,
+    .gap-table td {
+      padding: 10px 11px;
+      vertical-align: top;
+      border: 1px solid var(--line);
+      text-align: left;
+    }
+
+    .evidence-table th,
+    .gap-table th {
+      color: var(--navy);
+      background: #edf3fa;
+      font-weight: 850;
+    }
+
+    .fit {
+      white-space: nowrap;
+      color: var(--green);
+      font-weight: 850;
+    }
+
+    .qa-tools {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .qa-tools input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .qa-tools input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(30, 95, 174, 0.1);
+    }
+
+    .qa-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    details.qa {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    details.qa[open] {
+      border-color: #a9c7e8;
+      box-shadow: 0 6px 18px rgba(32, 77, 130, 0.07);
+    }
+
+    details.qa summary {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px 16px;
+      color: #172a47;
+      cursor: pointer;
+      font-weight: 800;
+      list-style: none;
+    }
+
+    details.qa summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .q-number {
+      display: inline-grid;
+      width: 24px;
+      height: 24px;
+      flex: 0 0 24px;
+      place-items: center;
+      color: #fff;
+      background: var(--blue);
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .answer {
+      padding: 0 16px 16px 50px;
+      color: #3c485a;
+    }
+
+    .answer p {
+      margin: 6px 0;
+    }
+
+    .answer ul,
+    .content ul,
+    .content ol {
+      margin: 7px 0;
+      padding-left: 21px;
+    }
+
+    .answer li,
+    .content li {
+      margin: 4px 0;
+    }
+
+    .answer-script {
+      padding: 12px 14px;
+      background: #f6f8fb;
+      border-radius: 7px;
+    }
+
+    .priority {
+      display: inline-block;
+      min-width: 36px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .p0 {
+      color: var(--red);
+      background: var(--red-bg);
+    }
+
+    .p1 {
+      color: var(--amber);
+      background: var(--amber-bg);
+    }
+
+    .p2 {
+      color: var(--green);
+      background: var(--green-bg);
+    }
+
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .week {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .week .week-no {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+    }
+
+    .week h3 {
+      margin: 5px 0 8px;
+      font-size: 16px;
+    }
+
+    .week ul {
+      margin-bottom: 0;
+      color: #566276;
+      font-size: 13px;
+    }
+
+    .deliverable {
+      margin-top: 28px;
+      padding: 18px 20px;
+      border: 1px dashed #83addb;
+      border-radius: 10px;
+      background: #f5faff;
+    }
+
+    .deliverable h3 {
+      margin-top: 0;
+    }
+
+    .footer-note {
+      margin-top: 30px;
+      padding-top: 16px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+    }
+
+    @media screen and (max-width: 900px) {
+      .topbar {
+        position: static;
+        display: grid;
+        justify-content: stretch;
+      }
+
+      .brand {
+        text-align: center;
+      }
+
+      .print-button {
+        width: 100%;
+      }
+
+      .page-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .page-actions .print-button,
+      .page-actions .save-state {
+        grid-column: 1 / -1;
+      }
+
+      .action-button {
+        min-height: 42px;
+      }
+
+      main {
+        padding: 18px 10px 40px;
+      }
+
+      .resume-page {
+        width: 100%;
+        min-height: auto;
+        padding: 24px 20px;
+      }
+
+      .resume-header,
+      .two-col,
+      .roadmap,
+      .match-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact {
+        grid-template-columns: 1fr;
+        text-align: left;
+      }
+
+      .skill-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .job-head {
+        grid-template-columns: 1fr;
+        gap: 1px;
+      }
+
+      .job-head .role {
+        text-align: left;
+      }
+
+      .hero,
+      .content {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+
+      .content-shell {
+        border-radius: 10px;
+      }
+
+      .evidence-table,
+      .gap-table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .topbar {
+        display: none !important;
+      }
+
+      .edit-tip {
+        display: none !important;
+      }
+
+      main {
+        padding: 0;
+      }
+
+      .view {
+        max-width: none;
+      }
+
+      .resume-stack {
+        gap: 0;
+      }
+
+      .resume-page {
+        width: 210mm;
+        min-height: 297mm;
+        box-shadow: none;
+        page-break-after: always;
+        break-after: page;
+      }
+
+      .resume-page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+
+      .content-shell {
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .hero {
+        padding-top: 18mm;
+      }
+
+      .content {
+        padding: 10mm 13mm 14mm;
+      }
+
+      details.qa {
+        break-inside: avoid;
+      }
+
+      details.qa:not([open]) > *:not(summary) {
+        display: block;
+      }
+
+      .qa-tools {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <strong>任腾跃｜WorkBuddy 求职包</strong>
+      <span>定向简历 · 岗位匹配 · 面试问答 · 补齐计划</span>
+    </div>
+    <nav class="nav-tabs" aria-label="内容导航">
+      <button type="button" class="active" data-target="resume">定向简历</button>
+      <button type="button" data-target="projects">项目案例</button>
+      <button type="button" data-target="match">岗位匹配</button>
+      <button type="button" data-target="interview">面试问答</button>
+      <button type="button" data-target="gaps">能力补齐</button>
+    </nav>
+    <div class="page-actions" aria-label="页面操作">
+      <button type="button" class="action-button" id="editButton">开始编辑</button>
+      <button type="button" class="action-button" id="saveButton">立即保存</button>
+      <button type="button" class="action-button" id="exportButton">导出新版</button>
+      <button type="button" class="action-button" id="resetButton">恢复原稿</button>
+      <button type="button" class="print-button" id="printButton">打印当前模块</button>
+      <span class="save-state" id="saveState" role="status" aria-live="polite">未修改</span>
+    </div>
+  </header>
+
+  <div class="edit-tip" id="editTip">编辑模式已开启：直接点击正文修改；内容会自动保存在这台设备中。</div>
+
+  <main>
+    <section class="view active" id="resume" aria-labelledby="resume-view-title">
+      <h1 id="resume-view-title" hidden>任腾跃定向简历</h1>
+      <div class="resume-stack">
+        <article class="resume-page">
+          <header class="resume-header">
+            <div>
+              <div class="resume-name-row">
+                <h2 class="resume-name">任腾跃</h2>
+                <span class="target-title">智能体商业化 / 平台产品经理</span>
+              </div>
+            </div>
+            <div class="contact">
+              <span><strong>手机</strong> 176-1282-8378</span>
+              <span><strong>邮箱</strong> rentengyue@foxmail.com</span>
+              <span><strong>现任</strong> 腾讯 PCG · QQ 产品策划</span>
+              <span><strong>教育</strong> 四川大学 · 计算机本科</span>
+            </div>
+          </header>
+
+          <section class="resume-section">
+            <h2 class="resume-section-title">个人概览</h2>
+            <div class="summary-box">
+              8年以上平台、商业化与复杂交易产品经验。目前作为部门AI探索先行者，以QQ运动为试点推动研发协作流程创新；
+              同时负责QQ运动穿戴生态与AI个性化升级、QQ与微信支付互通，以及消费金融借贷服务平台建设。
+              腾讯前完成银行/消金平台0到1、百亿级经营和头部平台开放合作。
+              擅长将复杂业务抽象为标准产品能力，以数据、规则与算法持续优化，并推动技术、法务、风控、
+              运营、开放平台及外部伙伴共同落地；目前作为部门AI探索先行者，推动产品、设计、研发、测试协作流程的AI原生重构。
+            </div>
+          </section>
+
+          <section class="resume-section">
+            <h2 class="resume-section-title">核心能力</h2>
+            <div class="skill-grid">
+              <div class="skill"><b>商业化产品</b>计费模式、交易分润、用户分层、漏斗与收入经营</div>
+              <div class="skill"><b>平台与生态</b>H5/小程序/API、账户授权、多方接入、能力标准化</div>
+              <div class="skill"><b>复杂交易</b>授信、借款、支付、验密、对账、结算与异常闭环</div>
+              <div class="skill"><b>AI与数据策略</b>Vibe Coding、实时/离线策略、SQL、A/B测试、对话式分析</div>
+            </div>
+          </section>
+
+          <section class="resume-section">
+            <h2 class="resume-section-title">腾讯经历</h2>
+
+            <article class="job">
+              <div class="job-head">
+                <span>2023.11-至今</span>
+                <span>腾讯 PCG · QQ</span>
+                <span class="role">产品策划</span>
+              </div>
+
+              <span class="project-label">AI研发协作流程探索｜以QQ运动为首个试点</span>
+              <ul class="resume-list">
+                <li><b>发起跨职能AI协作实践：</b>作为部门AI探索先行者，以QQ运动真实需求为试点，联合产品、设计、前端、后端与测试，
+                  系统验证AI在需求定义、方案评审、研发实现和质量保障等环节的应用方式。</li>
+                <li><b>探索可运行方案驱动的研发模式：</b>由产品借助AI直接生成可体验的前端流程，用真实交互完成方案评审和关键决策；
+                  方案确认后，基于前端实现进一步生成接口契约、后端框架与测试用例，降低跨角色理解偏差和后期返工。</li>
+                <li><b>沉淀阶段性流程方法：</b>实践发现，AI仅用于写PRD或辅助编码时，整体效率仍受制于评审、交接与变更成本；
+                  更有效的方向是重新组织产品、设计、研发和测试的协作链路。目前已形成初步实践框架并持续验证。</li>
+              </ul>
+
+              <span class="project-label">QQ运动｜穿戴生态平台化与AI个性化升级</span>
+              <ul class="resume-list">
+                <li><b>构建多厂商穿戴设备接入体系：</b>主导Apple Watch、小米、华为、佳明、荣耀、OPPO等厂商合作与接入，
+                  协调外部平台、设备厂商及内部技术团队，打通数据授权、同步、状态回传和异常处理链路。</li>
+                <li><b>沉淀生态接入标准：</b>将不同厂商的设备能力、数据口径和技术协议抽象为统一接入规范，建立字段、状态、
+                  数据质量、联调验收及异常处置标准，降低新增厂商接入成本并提升生态扩展效率。</li>
+                <li><b>主导千万级用户AI个性化升级：</b>基于用户价值与场景时效性设计“实时生成＋离线批量生成”双模式，
+                  对小范围、高价值场景采用实时策略，对低价值及规模化场景采用离线策略，平衡内容效果、响应效率与生成成本。</li>
+                <li><b>搭建千人千面策略与内容治理体系：</b>综合用户状态、时间等多维信号进行个性化决策，攻克万级离线内容模板生成、
+                  复杂状态逻辑判断和文本质量校验等难题，实现面向大规模用户的差异化内容供给。</li>
+              </ul>
+
+              <span class="project-label">QQ×微信支付生态互通｜跨端支付基础设施建设</span>
+              <ul class="resume-list">
+                <li><b>主导两大支付生态的系统级互通：</b>牵引QQ、微信支付、微信开放平台、FIT及法务、风控等多方，
+                  在跨产品、跨账户体系与跨底层资金系统的复杂约束下，完成产品规则、技术链路和合规责任的整体设计，
+                  系统解决实名主体、用户授权、资金安全、风险处置及责任边界等核心问题。</li>
+                <li><b>重构QQ核心场景的支付能力：</b>推动红包、转账、收款、代付款等场景全面支持微信支付，贯通支付受理、
+                  结果回传、异常补偿等链路，并融合微信支付风控、反洗钱能力，形成安全、稳定、可规模化复用的跨端支付方案。</li>
+                <li><b>打通QQ余额与微信零钱账户体系：</b>推动QQ余额转入微信零钱从0到1落地，构建微信授权、支付验密、
+                  同名实名核验、账户管控、资金划转、双端消息及账单的完整闭环，实现两大支付账户体系间的合规资金流转。</li>
+                <li><b>实现显著用户与业务价值：</b>功能上线后获得广泛社会关注，登上微博、脉脉等平台热搜；内部监控显示，
+                  QQ余额转入微信的日均金额达到<span class="metric">数千万元量级</span>。</li>
+              </ul>
+
+            </article>
+
+          </section>
+        </article>
+
+        <article class="resume-page">
+          <section class="resume-section" style="margin-top:0">
+            <h2 class="resume-section-title">腾讯经历（续）</h2>
+            <span class="project-label">QQ消费金融借贷服务平台｜平台化转型与0到1建设</span>
+            <ul class="resume-list">
+              <li><b>主导业务平台化转型：</b>推动QQ消费金融从广告导流模式升级为一站式借贷服务平台，
+                将分散的流量、金融产品和服务链路整合为面向用户的统一金融服务入口。</li>
+              <li><b>搭建借贷平台核心能力：</b>构建从信息授权、贷款申请、准入预筛到授信/借款转化的完整链路；
+                建设账户、订单、消息、机构与数据等能力，沉淀可复用、可扩展的平台底座。</li>
+              <li><b>建立智能分发与多机构供给：</b>对接多家消费金融公司及银行，结合用户需求、机构准入、
+                算法推荐与规则路由进行产品匹配，提升用户获得适配金融服务的效率。</li>
+              <li><b>重构可持续商业模式：</b>将一次性CPA升级为与真实借款及利息挂钩的CPS长期分润；阶段内授信人数
+                <span class="metric">约3.5倍</span>、借款人数<span class="metric">约5.2倍</span>增长。</li>
+            </ul>
+          </section>
+
+          <section class="resume-section" style="margin-top:10px">
+            <h2 class="resume-section-title">过往经历</h2>
+            <div class="past-list">
+              <article class="mini-job">
+                <h3><span>平安银行信用卡中心</span><span>2021.06-2023.11</span></h3>
+                <p><b>职责：</b>负责微信、支付宝、银联、抖音等头部平台的生息产品合作，覆盖消费、借款、还款链路；
+                  设计H5/小程序/API方案，统一不同渠道的客群、折扣、策略、流程和数据交互标准，并通过A/B测试持续经营。</p>
+                <p><b>成果：</b>接入微信、支付宝、银联并形成标准化合作模式，年业务规模约<span class="metric">200亿元、同比约+100%</span>；
+                  推动行业首家现金分期外部合作，月规模近<span class="metric">10亿元</span>，关键链路优化后响应率提升近<span class="metric">20%</span>。</p>
+              </article>
+              <article class="mini-job">
+                <h3><span>中信银行信用卡中心</span><span>2019.11-2021.05</span></h3>
+                <p><b>职责：</b>负责中信商旅平台产品线及机票平台0到1，推进航司DNC对接、产品引入、协议与财务结算，
+                  建设优惠券、标签、预售、分期和积分支付等平台能力，并负责航司旗舰店经营。</p>
+                <p><b>成果：</b>机票平台首年销售额突破<span class="metric">1亿元</span>；引入深航、东航、南航旗舰店，
+                  上线周边、预售、返现及“机票＋服务”产品，旗舰店产品占比达到<span class="metric">30%</span>。</p>
+              </article>
+              <article class="mini-job">
+                <h3><span>招联消费金融</span><span>2019.05-2019.11</span></h3>
+                <p><b>职责：</b>负责信用贷交易体系和存量用户经营，基于用户调研、业务规则和数据分析设计借款产品，
+                  联合运营、风控、合规及研发推进落地，并建立上线后的监控指标。</p>
+                <p><b>成果：</b>通过还款假期、随心分和高期数引导将借款时长从<span class="metric">79天提升至105天</span>；
+                  统一十余种借款流程，页面改造后转化率提升<span class="metric">3%</span>，并上线支付宝账号收款能力。</p>
+              </article>
+              <article class="mini-job">
+                <h3><span>前海达飞金融 / 即有分期</span><span>2017.11-2019.04</span></h3>
+                <p><b>职责：</b>负责C端消费分期及现金功能，覆盖用户研究、市场与竞品分析、产品方案、上线监控和持续迭代；
+                  同时建设产品管理平台，提升产品与渠道配置效率。</p>
+                <p><b>成果：</b>完成产品管理平台0到1；车险分期覆盖<span class="metric">56城</span>；
+                  信用卡贷月均贷款约<span class="metric">3000万元</span>，超过项目预期目标。</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="resume-section" hidden>
+            <h2 class="resume-section-title">代表项目</h2>
+            <div class="project-list">
+              <article class="project-card">
+                <h3>01｜AI研发协作流程探索｜以QQ运动为首个试点</h3>
+                <p><b>项目定位：</b>作为部门AI探索先行者，以QQ运动真实需求为试点，联合产品、设计、前端、后端与测试团队，
+                  研究AI如何从单点工具升级为贯穿需求、评审、研发和测试的协作能力。目前处于持续实践与验证阶段。</p>
+                <p><b>关键判断：</b>AI仅用于生成PRD或辅助编码时，局部产出虽有提升，但评审等待、需求歧义、跨角色交接和后期返工仍然存在；
+                  进一步释放效率，需要同步调整交付物形态、协作顺序与角色边界。</p>
+                <p><b>实践模式：</b>产品先借助AI生成可运行的前端交互，以真实体验完成方案评审和关键决策；方案确认后，
+                  再基于前端实现生成接口契约、后端框架及测试用例，探索由“文档驱动”向“可运行方案驱动”的研发模式升级。</p>
+                <p><b>产品侧实践：</b>同步将AI用于可交互前端验证、方案与汇报材料生成、业务目标测算，以及获得数据权限后的
+                  对话式报表生成和分析，逐步沉淀产品经理的AI工作方法。</p>
+                <p><b>阶段结论：</b>初步实践表明，围绕确定性的可体验方案组织前后端与测试协作，比各角色孤立使用AI更有机会减少信息损耗与重复工作；
+                  后续将继续通过交付周期、需求变更和返工情况验证实际效果。</p>
+              </article>
+
+              <article class="project-card">
+                <h3>02｜QQ运动｜穿戴生态平台化与AI个性化升级</h3>
+                <p><b>生态接入：</b>主导Apple Watch、小米、华为、佳明、荣耀、OPPO等厂商合作，打通授权、数据同步、
+                  状态回传与异常处理，并将多厂商差异沉淀为统一的数据口径、接入流程、联调验收和质量标准。</p>
+                <p><b>AI架构：</b>面向千万级用户设计实时与离线双模式：高价值用户及小范围强时效场景实时生成，
+                  低价值及大规模场景离线批量生成，在个性化效果、服务时延和推理成本之间取得平衡。</p>
+                <p><b>策略系统：</b>基于用户状态、时间等多维信号进行千人千面决策，建设万级离线内容模板生产机制、
+                  复杂状态逻辑和文本质量校验链路，保障内容匹配度、一致性与安全性。</p>
+                <p><b>岗位迁移价值：</b>兼具外部生态接入标准化与大规模AI策略产品经验，可迁移至WorkBuddy的多能力接入、
+                  模型路由、实时/离线任务调度、成本控制和AI内容评测治理。</p>
+              </article>
+
+              <article class="project-card">
+                <h3>03｜QQ×微信支付生态互通：跨端支付基础设施建设</h3>
+                <p><b>项目定位：</b>面向QQ与微信两大国民级产品，建设跨支付生态的账户与交易连接能力；项目横跨产品、账户、
+                  风控及底层资金系统，是兼具用户价值、合规复杂度和大规模交易稳定性要求的系统级工程。</p>
+                <p><b>核心挑战：</b>牵引QQ、微信支付、微信开放平台、FIT及法务、风控等多方完成顶层方案设计与规则对齐，
+                  将实名主体、授权关系、支付验密、反洗钱、账户管控、异常处置及责任边界转化为统一的产品与技术机制。</p>
+                <p><b>支付生态互通：</b>推动QQ红包、转账、收款、代付款等核心场景全面支持微信支付，贯通支付受理、结果回传、
+                  风险决策与异常补偿链路，形成可规模化复用的跨端支付能力。</p>
+                <p><b>账户资产互通：</b>从0到1落地QQ余额转入微信零钱，构建微信授权、同名实名核验、QQ支付验密、资金划转、
+                  双端消息与账单闭环，实现两大账户体系间安全、合规、可追溯的资金流转。</p>
+                <p><b>项目结果：</b>上线后获得用户和行业广泛关注，登上微博、脉脉等平台热搜；QQ余额转入微信的日均金额达到
+                  数千万元量级，验证了真实用户价值与规模化交易需求。</p>
+              </article>
+
+              <article class="project-card">
+                <h3>04｜QQ消费金融借贷服务平台：从流量生意到平台化金融服务</h3>
+                <p><b>战略转型：</b>推动业务从分散的广告导流升级为一站式借贷服务平台，以统一用户体验承接贷款需求，
+                  以标准能力连接多元金融供给。</p>
+                <p><b>平台建设：</b>完成信息授权、贷款申请、准入预筛、授信/借款转化链路，并沉淀账户、订单、消息、
+                  机构和数据等公共能力，形成可复用的平台底座。</p>
+                <p><b>智能匹配：</b>接入多家消费金融公司与银行，融合算法推荐和规则路由，综合用户需求、准入条件及机构策略，
+                  实现贷款产品的智能分发与动态匹配。</p>
+                <p><b>商业结果：</b>由CPA导流升级为基于真实借款与利息的CPS持续分润；阶段内授信人数约3.5倍、
+                  借款人数约5.2倍增长，建立可持续扩展的多机构经营模式。</p>
+              </article>
+
+              <article class="project-card">
+                <h3>05｜平安外部平台：开放合作标准化</h3>
+                <p><b>问题：</b>内部渠道增长乏力，需要借助头部平台扩展生息规模。</p>
+                <p><b>动作：</b>设计H5/小程序/API标准，统一不同平台客群、折扣、策略与流程，
+                  通过A/B测试持续优化。</p>
+                <p><b>结果：</b>年规模约200亿元、同比约+100%；现金分期月规模近10亿元。</p>
+              </article>
+
+              <article class="project-card">
+                <h3>06｜中信商旅：平台0到1</h3>
+                <p><b>问题：</b>银行需要基于航司资源建设差异化商旅产品。</p>
+                <p><b>动作：</b>负责协议、DNC对接、产品引入、财务结算、UED、SIT、UAT及经营。</p>
+                <p><b>结果：</b>首年销售额破亿元；引入三家航司旗舰店，并上线优惠券、预售、
+                  分期、积分支付等平台能力。</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="resume-section">
+            <h2 class="resume-section-title">教育背景</h2>
+            <div class="education-row">
+              <span>2013.09-2017.06</span>
+              <span>四川大学 · 计算机科学与技术</span>
+              <span>本科</span>
+            </div>
+          </section>
+
+        </article>
+      </div>
+    </section>
+
+    <section class="view" id="projects" aria-labelledby="projects-title">
+      <div class="content-shell">
+        <header class="hero">
+          <p class="eyebrow">PROJECT PLAYBOOK</p>
+          <h1 id="projects-title">项目案例库：完整经历与面试素材</h1>
+          <p>按“背景—定位—判断—实践—难点—结果—面试价值”整理。已验证事实与待补充证据分开记录，便于针对不同岗位组合案例。</p>
+          <div class="hero-meta">
+            <span>16个项目案例</span>
+            <span>AI / 平台 / 支付 / 金融 / 生态</span>
+            <span>腾讯项目优先</span>
+          </div>
+        </header>
+        <div class="content">
+          <div class="callout">
+            <strong>使用建议：</strong>面试前根据岗位选3个主案例，每个准备90秒摘要和5分钟深讲；所有内部数据使用前确认口径和披露边界。
+          </div>
+          <div class="qa-tools">
+            <input id="projectSearch" type="search" placeholder="搜索项目、能力或关键词，例如：AI、支付、平台、生态、合规" aria-label="搜索项目案例">
+          </div>
+          <div class="case-library" id="projectList">
+            <details class="qa" open>
+              <summary><span class="q-number">1</span><span>AI研发协作流程探索｜以QQ运动为首个试点</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>腾讯QQ</span><span>AI研发提效</span><span>流程创新</span><span>探索阶段</span></div>
+                <p class="case-section"><strong>背景：</strong>产品、设计、研发和测试分别使用AI，只能提升局部产出速度，评审等待、需求歧义、跨角色交接和返工仍制约整体效率。</p>
+                <p class="case-section"><strong>定位与判断：</strong>以QQ运动真实需求为试点，验证AI能否从单点工具升级为研发协作基础能力；核心判断是系统效率提升必须同步调整交付物、协作顺序和角色边界。</p>
+                <p class="case-section"><strong>实践：</strong>产品借助AI把代码拉至本地并生成可运行前端，用真实交互完成评审和管理者确认；方案确定后，再基于前端实现生成接口契约、后端框架和测试用例。</p>
+                <p class="case-section"><strong>难点：</strong>产品需承担部分前端交付职责；团队需要重新约定代码质量、设计一致性、接口边界和测试责任，不能把AI产物直接视为生产结果。</p>
+                <p class="case-section"><strong>阶段结果：</strong>已形成“可运行方案驱动研发”的初步实践框架，正通过真实项目持续验证。产品侧同时用于方案与汇报材料、目标测算以及对话式报表分析。</p>
+                <p class="case-section"><strong>面试价值：</strong>直接对应WorkBuddy / CodeBuddy的AI开发工具、Agentic Workflow与组织提效场景，体现从工具使用走向流程设计的思考。</p>
+                <p class="case-section"><strong>待补证据：</strong>交付周期、需求变更次数、返工率、代码采纳率、测试覆盖率及具体使用工具。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">2</span><span>QQ运动穿戴生态｜多厂商接入与标准化</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>腾讯QQ</span><span>开放生态</span><span>平台标准化</span></div>
+                <p><strong>背景：</strong>不同穿戴厂商在授权方式、数据协议、指标口径、同步频率和异常状态上差异明显，逐家定制会持续推高接入成本。</p>
+                <p><strong>定位与判断：</strong>目标不仅是完成单个厂商合作，而是建立可持续扩展的穿戴生态接入体系。</p>
+                <p><strong>实践：</strong>主导Apple Watch、小米、华为、佳明、荣耀、OPPO等厂商接入；协调外部平台、设备厂商和内部研发，沉淀字段、状态、数据质量、联调验收及异常处置标准。</p>
+                <p><strong>结果：</strong>完成主流穿戴品牌覆盖，形成多厂商统一接入与治理框架。</p>
+                <p><strong>面试价值：</strong>可用于回答开放平台、多方生态合作、能力标准化和复杂外部协同问题。</p>
+                <p><strong>待补证据：</strong>各厂商上线时间、覆盖用户、数据成功率、接入周期缩短幅度。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">3</span><span>QQ运动AI个性化｜千万级用户实时与离线策略</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>腾讯QQ</span><span>AI产品</span><span>千万级用户</span><span>策略系统</span></div>
+                <p><strong>背景：</strong>运动用户规模大、状态差异显著，统一内容难以兼顾相关性、时效、生成成本和服务稳定性。</p>
+                <p><strong>定位与判断：</strong>按用户价值和场景时效性选择生成模式，高价值或小范围场景实时生成，低价值及规模化场景离线批量生成。</p>
+                <p><strong>实践：</strong>结合用户状态、时间等多维信号实现千人千面；建设万级离线内容模板生产机制、复杂状态逻辑和文本质量校验链路。</p>
+                <p><strong>难点：</strong>大规模模板生成、状态组合爆炸、文本一致性与安全校验，以及效果、时延和推理成本之间的平衡。</p>
+                <p><strong>结果：</strong>形成面向千万级用户的实时/离线双模式个性化方案并逐步落地。</p>
+                <p><strong>面试价值：</strong>可迁移至Agent任务路由、成本分层、内容评测和大规模AI产品运营。</p>
+                <p><strong>待补证据：</strong>覆盖比例、生成成本、文本通过率、点击/互动/留存变化及个人决策边界。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">4</span><span>QQ核心支付场景接入微信支付</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>腾讯QQ</span><span>支付平台</span><span>跨生态协同</span></div>
+                <p><strong>背景：</strong>QQ红包、转账、收款、代付款等高频场景需要扩展微信支付方式，同时满足大规模交易的安全与稳定要求。</p>
+                <p><strong>定位与判断：</strong>不是增加一个支付按钮，而是建立QQ场景与微信支付受理、风控和资金链路之间的系统级连接。</p>
+                <p><strong>实践：</strong>牵引QQ、微信支付、微信开放平台、FIT及法务、风控，贯通支付受理、结果回传、异常补偿，并融合微信支付风控和反洗钱策略。</p>
+                <p><strong>难点：</strong>跨产品、跨团队、跨底层资金系统的规则与责任对齐。</p>
+                <p><strong>结果：</strong>QQ多类核心支付场景支持微信支付，形成安全、稳定、可复用的跨端支付能力。</p>
+                <p><strong>面试价值：</strong>证明复杂交易设计、跨部门推进、风控合规与平台基础能力建设。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">5</span><span>QQ余额转微信零钱｜跨账户资金互通</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>腾讯QQ</span><span>跨账户交易</span><span>0到1</span><span>法务合规</span></div>
+                <p><strong>背景：</strong>QQ钱包有3亿以上余额用户、余额规模约30亿元，用户希望将QQ余额便捷转入本人微信零钱。</p>
+                <p><strong>定位与判断：</strong>在两个支付账户体系间建立安全、合规、可追溯的本人资金流转能力，必须先解决身份、授权和责任边界。</p>
+                <p><strong>实践：</strong>设计手动与自动转入；覆盖微信OpenID授权、协议签署、QQ支付验密、同名实名核验、账户管控、资金划转、失败拦截、双端通知及账单。</p>
+                <p><strong>难点：</strong>QQ与微信实名主体映射、异常账户拦截、每次自动转入校验，以及QQ、微信支付、开放平台和FIT的底层协同。</p>
+                <p><strong>结果：</strong>功能上线后登上微博、脉脉等平台热搜；内部监控显示日均转入金额达到数千万元量级。</p>
+                <p><strong>面试价值：</strong>适合回答复杂项目治理、账户体系、授权合规、支付状态机及跨组织协作。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">6</span><span>QQ消费金融借贷服务平台｜从流量变现到平台经营</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>腾讯QQ</span><span>商业化</span><span>平台0到1</span><span>算法推荐</span></div>
+                <p><strong>背景：</strong>QQ金融长期依赖合约/竞价广告补充收入，但用户体验参差、征信风险和流量经营天花板逐渐显现。</p>
+                <p><strong>定位与判断：</strong>将信贷服务产品化，以统一体验连接不同信用层次用户与银行、消费金融机构；合规优先，并建立可持续分润模式。</p>
+                <p><strong>实践：</strong>采用“授信API＋借还款H5/小程序”；搭建申请、准入、机构前筛轮询、算法/规则推荐，以及账户、订单、消息、机构和数据底座；制定准入、风险规避和最小字段标准。</p>
+                <p><strong>难点：</strong>平衡用户选择权、敏感信息使用、服务方认知、申请次数和个人征信保护，并推动法务、风控理解行业模式。</p>
+                <p><strong>结果：</strong>接入7家机构；阶段内授信人数约3.5倍、借款人数约5.2倍增长；商业模式由CPA升级为基于真实借款利息的CPS持续分润。</p>
+                <p><strong>面试价值：</strong>直接证明平台化转型、商业模式、智能分发、多机构接入和复杂合规能力。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">7</span><span>QQ统一手机号授权组件</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>腾讯QQ</span><span>基础组件</span><span>能力复用</span></div>
+                <p><strong>背景：</strong>不同业务需要用户手机号授权，重复建设会造成体验、合规和研发成本不一致。</p>
+                <p><strong>定位与判断：</strong>将手机号授权沉淀为端内统一基础能力，为内部业务和外部商家提供标准化调用。</p>
+                <p><strong>实践：</strong>负责组件产品方案与开放使用，已支持游戏中心及外部商家调用。</p>
+                <p><strong>结果：</strong>形成跨业务可复用的手机号授权组件。</p>
+                <p><strong>面试价值：</strong>适合证明平台组件化、权限授权和内部开放能力建设。</p>
+                <p><strong>待补证据：</strong>调用方式、接入业务数、接入周期、授权转化与合规机制。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">8</span><span>QQ金融理财（小金库）产品</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>腾讯QQ</span><span>金融产品</span><span>待补充</span></div>
+                <p><strong>已知范围：</strong>承担QQ端金融理财“小金库”相关产品策划工作。</p>
+                <p><strong>面试价值：</strong>可补充综合金融服务平台、用户资金管理和金融产品协同经验。</p>
+                <p><strong>待补证据：</strong>项目背景、用户问题、个人职责、产品方案、合规要点、上线范围和经营结果；当前不作为主讲案例。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">9</span><span>平安外部生息平台｜头部渠道标准化合作</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>平安银行</span><span>开放平台</span><span>经营增长</span></div>
+                <p><strong>背景：</strong>内部APP、电销和线下渠道增长乏力，需要依托微信、支付宝、银联、抖音等头部场景扩大生息规模。</p>
+                <p><strong>定位与判断：</strong>建立可复制的外部生息合作模式，而非逐渠道定制；统一客群、折扣、策略、流程和数据交互标准。</p>
+                <p><strong>实践：</strong>负责合作洽谈、H5/小程序/API方案、系统对接及运营；覆盖消费、借款、还款链路，并通过名单、折扣、活动和流程A/B测试持续优化。</p>
+                <p><strong>结果：</strong>年业务规模约200亿元、同比约增长100%；推动取现、循环类非标产品外部合作，均为行业首家对外合作行。</p>
+                <p><strong>面试价值：</strong>可回答开放合作、平台标准化、商业经营和跨公司项目推进。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">10</span><span>平安现金分期外部合作｜行业首家模式</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>平安银行</span><span>现金分期</span><span>交易链路</span></div>
+                <p><strong>背景：</strong>希望将现金分期能力嵌入外部互联网平台，突破银行自有渠道增长限制。</p>
+                <p><strong>判断与实践：</strong>以标准H5/小程序/API兼容内外部系统，统一业务与策略逻辑；持续优化提前结清、无卡下单、储蓄卡透传等关键环节。</p>
+                <p><strong>结果：</strong>与微信、支付宝、银联全面合作，作为首家银行上线外部现金分期业务，月规模接近10亿元；关键链路整体响应率提升近20%。</p>
+                <p><strong>面试价值：</strong>证明创新合作模式、复杂交易链路和数据驱动优化能力。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">11</span><span>中信商旅平台与航司旗舰店｜平台0到1</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>中信银行</span><span>商旅平台</span><span>0到1</span></div>
+                <p><strong>背景：</strong>依托中信战略合作资源，引入航空公司直营供给，为信用卡用户提供具有金融属性的差异化商旅服务。</p>
+                <p><strong>定位与判断：</strong>不仅建设机票售卖页面，还要形成产品供给、营销、支付、结算和经营一体化平台。</p>
+                <p><strong>实践：</strong>独立推进协议、航司DNC系统对接、产品引入、财务结算、UED、开发、SIT和UAT；建设优惠券、标签、排名、预售、分期及积分支付。</p>
+                <p><strong>结果：</strong>平台首年销售额破亿元；引入深航、东航、南航旗舰店，旗舰店产品占比30%，并上线周边、返现及“机票＋服务”产品。</p>
+                <p><strong>面试价值：</strong>证明平台从0到1、外部供给接入、交易结算与全生命周期产品管理。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">12</span><span>招联贷款时长提升｜存量用户价值经营</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>招联消费金融</span><span>用户经营</span><span>产品策略</span></div>
+                <p><strong>背景：</strong>循环额度用户借款周期偏短，需要在风险可控前提下增强用户黏性并提升产品收益。</p>
+                <p><strong>判断与实践：</strong>通过客服回访、问卷和竞品分析识别需求；联合运营、风险和研发上线还款假期、随心分、高期数引导及首期付息折扣方案。</p>
+                <p><strong>结果：</strong>用户借款时长由79天提升至105天；提出用户有贷时长占比等8项关键观测指标。</p>
+                <p><strong>面试价值：</strong>适合回答用户洞察、产品组合、数据指标和跨职能策略落地。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">13</span><span>招联借款流程标准化与转化提升</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>招联消费金融</span><span>流程治理</span><span>转化优化</span></div>
+                <p><strong>背景：</strong>十余种借款流程并存，造成开发、运营和维护成本高，用户链路也存在冗余。</p>
+                <p><strong>定位与实践：</strong>统一业务规则与流程框架，缩短借款页面链路，并建立上线后的数据监控。</p>
+                <p><strong>结果：</strong>完成十余种流程标准化，借款转化率提升3%，历史材料测算可提升借款余额约30亿元/年。</p>
+                <p><strong>面试价值：</strong>可回答复杂流程抽象、平台治理、漏斗分析和体验优化。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">14</span><span>招联支付宝账号收款能力</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>招联消费金融</span><span>支付创新</span><span>行业首创</span></div>
+                <p><strong>背景：</strong>用户收款方式限制影响借款体验和转化，需要拓展更便捷的资金到账方式。</p>
+                <p><strong>实践：</strong>上线非支付宝应用内填写支付宝账号收款的产品能力。</p>
+                <p><strong>结果：</strong>历史简历记录为业内首个相关功能，提升平台借款转化率与用户体验。</p>
+                <p><strong>面试价值：</strong>可用于支付方式创新和用户链路优化案例。</p>
+                <p><strong>待补证据：</strong>账户校验、风控机制、转化提升幅度及上线范围。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">15</span><span>即有分期产品管理平台与车险分期</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>前海达飞 / 即有分期</span><span>产品平台</span><span>业务拓展</span></div>
+                <p><strong>背景：</strong>消费金融产品与渠道需要更高效的配置管理，同时公司希望拓展车险分期业务。</p>
+                <p><strong>判断与实践：</strong>从0到1搭建产品管理平台，实现产品和渠道维度的实时更新；同步负责车险分期产品设计与全国业务布局。</p>
+                <p><strong>结果：</strong>提升业务精细化管理与处理时效；车险分期开放至全国56个城市。</p>
+                <p><strong>面试价值：</strong>证明早期平台建设、配置化思维与新业务落地能力。</p>
+                <p><strong>待补证据：</strong>平台模块、配置效率、使用团队和车险分期经营指标。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">16</span><span>即有分期信用卡贷产品</span></summary>
+              <div class="answer">
+                <div class="case-meta"><span>前海达飞 / 即有分期</span><span>信贷产品</span><span>0到1</span></div>
+                <p><strong>背景：</strong>围绕消费金融用户需求拓展现金类信贷产品。</p>
+                <p><strong>实践：</strong>完成信用卡贷产品设计，并结合上线数据持续优化。</p>
+                <p><strong>结果：</strong>月均贷款金额约3000万元，超过项目预期目标。</p>
+                <p><strong>面试价值：</strong>可作为早期独立产品设计与经营结果案例。</p>
+                <p><strong>待补证据：</strong>用户定位、授信与借款链路、个人职责边界、关键策略和风险指标。</p>
+              </div>
+            </details>
+          </div>
+          <div class="footer-note">资料来源：历史简历、P10晋升陈述、QQ余额转微信零钱方案及本次补充说明。待补证据不会作为已实现结果对外表述。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="match" aria-labelledby="match-title">
+      <div class="content-shell">
+        <header class="hero">
+          <p class="eyebrow">ROLE MATCHING</p>
+          <h1 id="match-title">最适合的岗位：智能体商业化产品经理</h1>
+          <p>结论基于你提供的5个WorkBuddy/CodeBuddy岗位JD与当前职业证据；分数用于比较相对匹配度，不代表招聘方评级。</p>
+          <div class="hero-meta">
+            <span>第一推荐：商业化产品经理</span>
+            <span>第二推荐：开放平台高级产品经理</span>
+            <span>建议主投P9/P10</span>
+          </div>
+        </header>
+        <div class="content">
+          <div class="match-grid" aria-label="岗位匹配评分">
+            <article class="match-card best">
+              <div class="rank">NO.1</div>
+              <h3>智能体商业化产品经理</h3>
+              <div class="score">88<small>/100</small></div>
+              <div class="bar"><span style="width:88%"></span></div>
+              <p>交易、支付、计费、分润、经营和复杂协同高度复用。</p>
+            </article>
+            <article class="match-card">
+              <div class="rank">NO.2</div>
+              <h3>开放平台高级产品经理</h3>
+              <div class="score">80<small>/100</small></div>
+              <div class="bar"><span style="width:80%"></span></div>
+              <p>API、账户授权、平台接入与生态协作证据较强。</p>
+            </article>
+            <article class="match-card">
+              <div class="rank">NO.3</div>
+              <h3>生态产品经理·经营工具</h3>
+              <div class="score">74<small>/100</small></div>
+              <div class="bar"><span style="width:74%"></span></div>
+              <p>生态合作和经营视角强，缺创作者工具直接案例。</p>
+            </article>
+            <article class="match-card">
+              <div class="rank">NO.4</div>
+              <h3>智能体策划产品经理</h3>
+              <div class="score">68<small>/100</small></div>
+              <div class="bar"><span style="width:68%"></span></div>
+              <p>平台0到1和体验治理强，AI开发者工具证据不足。</p>
+            </article>
+            <article class="match-card">
+              <div class="rank">NO.5</div>
+              <h3>智能体策略产品经理</h3>
+              <div class="score">55<small>/100</small></div>
+              <div class="bar"><span style="width:55%"></span></div>
+              <p>数据与规则基础可迁移，缺Agent评测和调优实战。</p>
+            </article>
+          </div>
+
+          <h2>为什么第一推荐商业化岗位</h2>
+          <table class="evidence-table">
+            <thead>
+              <tr>
+                <th>岗位要求</th>
+                <th>你的直接证据</th>
+                <th>判断</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>计费规则、交易链路、支付落地</td>
+                <td>推动QQ核心交易场景接入微信支付并打通QQ余额转微信零钱，覆盖支付、验密、风控、反洗钱、账户、账单及跨端资金流转。</td>
+                <td class="fit">强匹配</td>
+              </tr>
+              <tr>
+                <td>商业模式设计与0到1</td>
+                <td>主导QQ消费金融由广告导流向一站式借贷服务平台转型，并完成平台底座0到1建设与CPA→CPS商业模式升级。</td>
+                <td class="fit">强匹配</td>
+              </tr>
+              <tr>
+                <td>用户分层、漏斗、LTV与A/B测试</td>
+                <td>存量用户经营、客群分层、转化漏斗、名单/折扣/流程A/B测试及收入经营。</td>
+                <td class="fit">强匹配</td>
+              </tr>
+              <tr>
+                <td>高可用、可扩展商业架构</td>
+                <td>多机构统一接入、账户/订单/消息/数据基础能力，以及H5/小程序/API标准化经验。</td>
+                <td class="fit">较强匹配</td>
+              </tr>
+              <tr>
+                <td>AI大模型及Agent商业化</td>
+                <td>主导QQ运动千万级用户AI个性化策略，并以QQ运动为试点探索产品、设计、研发、测试的端到端AI协作流程；
+                  尚缺Agent订阅、Token成本和收费体系的完整上线案例。</td>
+                <td style="color:#9a6200;font-weight:850">关键缺口</td>
+              </tr>
+              <tr>
+                <td>海外订阅生态</td>
+                <td>当前证据主要来自国内金融/支付业务，缺多币种、税务、拒付、退款和海外定价经验。</td>
+                <td style="color:#9a6200;font-weight:850">需要补课</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="callout">
+            <strong>推荐定位：</strong>
+            不要把自己包装成“已经做过成熟Agent商业化”的候选人，而应定位为
+            “交易支付与商业化基本功非常强、已经进入AI产品场景、能够快速把WorkBuddy能力变成可计量、
+            可付费、可持续经营产品”的平台型商业化产品经理。
+          </div>
+
+          <h2>第二推荐岗位的使用条件</h2>
+          <p>
+            “开放平台高级产品经理”同样匹配你的平台合作和技术理解，但JD要求5年以上产品经验中至少2年深度参与
+            开发者/API平台，并强调OAuth、Scope、Token全生命周期、文档站、SDK、在线调试和能力市场。
+            你有H5/小程序/API、微信OpenID授权、多方接入和设备生态经验，却还没有完整开发者平台工作台案例。
+            如果能补出一份“WorkBuddy开放平台接入与权限体系方案”，该岗位可成为有竞争力的第二选择。
+          </p>
+
+          <div class="footer-note">依据：用户提供的WorkBuddy/CodeBuddy岗位JD、旧版简历及职业经历主档案。更新时间：2026-07-27。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="interview" aria-labelledby="interview-title">
+      <div class="content-shell">
+        <header class="hero">
+          <p class="eyebrow">INTERVIEW PLAYBOOK</p>
+          <h1 id="interview-title">智能体商业化产品经理：高概率面试问题与参考答案</h1>
+          <p>答案按“结论—判断—动作—结果—迁移价值”组织。面试时保留事实边界，不把补充方案说成既有业绩。</p>
+          <div class="hero-meta">
+            <span>21个核心问题</span>
+            <span>商业化 / AI / 交易 / 协同</span>
+            <span>建议先练1、3、5、7、15</span>
+          </div>
+        </header>
+        <div class="content">
+          <div class="callout amber">
+            <strong>使用方式：</strong>先用60-90秒回答结论和主线，面试官追问后再展开机制与数据。
+            下列答案是“结构化底稿”，不要逐字背诵。
+          </div>
+          <div class="qa-tools">
+            <input id="qaSearch" type="search" placeholder="搜索问题，例如：定价、Token、支付、A/B、合规" aria-label="搜索面试问题">
+          </div>
+
+          <div class="qa-list" id="qaList">
+            <details class="qa" open>
+              <summary><span class="q-number">1</span><span>请做一个90秒自我介绍，并说明为什么你适合WorkBuddy商业化岗位。</span></summary>
+              <div class="answer">
+                <div class="answer-script">
+                  我是一名计算机背景、长期负责复杂交易和平台型产品的产品经理。腾讯之前，我在招联、中信和平安负责消费金融、
+                  商旅平台及外部开放合作，做过平台0到1，也承担过百亿规模经营。2023年11月加入腾讯后，我主导QQ消费金融从广告导流
+                  向一站式借贷服务平台转型，整合多家银行及消费金融机构供给，搭建申请、准入、算法与规则分发，以及账户、订单、消息等
+                  平台基础能力，并将商业模式升级为持续分润；随后负责QQ基础支付体验，并推动QQ余额转入微信零钱；
+                  此后负责QQ运动穿戴生态与AI个性化升级，完成多厂商接入标准化，并面向千万级用户设计实时与离线双模式的千人千面策略。
+                  我的优势是能把复杂业务抽象成可计量、可交易、可持续经营的平台能力，
+                  并推动技术、法务、风控、运营和外部伙伴共同落地。这与WorkBuddy商业化岗位需要的计费、支付、用户分层、
+                  漏斗经营和跨团队交付高度一致。我的短板是Agent订阅与Token成本还缺完整上线案例，但我已经把它列为优先补强方向，
+                  并能够用既有商业化与交易能力快速迁移。
+                </div>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">2</span><span>为什么从金融、支付转向AI智能体？这是不是一次跨度很大的转型？</span></summary>
+              <div class="answer">
+                <p><b>结论：</b>不是从零换赛道，而是把商业化、交易和平台能力迁移到新的生产力场景。</p>
+                <ul>
+                  <li>金融和支付训练了我对计费、权益、账户、订单、支付、退款、风控和合规的系统理解。</li>
+                  <li>WorkBuddy要从“能力可用”走向“价值可计量、用户愿付费、平台可持续”，核心仍是产品价值与商业系统设计。</li>
+                  <li>QQ运动AI化让我开始进入AI功能场景；下一步要补的是模型成本、Agent评测和开发者工具语境。</li>
+                  <li>我能带来的差异化不是只懂模型，而是能把模型能力变成稳定的商业产品。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">3</span><span>你与这个岗位最匹配的三项能力是什么？</span></summary>
+              <div class="answer">
+                <ol>
+                  <li><b>完整交易与支付能力：</b>从用户授权、验密、订单到支付、账单、结算和异常闭环都有真实项目。</li>
+                  <li><b>商业模式与经营：</b>做过CPA到CPS升级、平台分润、用户分层、转化漏斗和A/B测试。</li>
+                  <li><b>平台化和复杂协同：</b>能把多个合作方的差异抽象成统一产品能力，并兼顾用户、平台、合作方和监管。</li>
+                </ol>
+                <p>第四项差异化能力是AI原生实践：既做过面向千万级用户的实时/离线个性化策略，也在部门内探索从可运行前端、
+                  接口契约到后端框架与测试用例的端到端AI协作流程。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">4</span><span>介绍一个你最有代表性的0到1商业化项目。</span></summary>
+              <div class="answer">
+                <p><b>推荐案例：QQ消费金融借贷服务平台。</b></p>
+                <ul>
+                  <li><b>背景：</b>原有模式以广告导流为主，用户体验、金融供给和转化链路彼此割裂，难以形成长期经营。</li>
+                  <li><b>判断：</b>核心不是继续优化广告位，而是完成业务的平台化转型：以统一借贷服务承接用户需求，
+                    以标准接口整合多家银行与消费金融机构。</li>
+                  <li><b>方案：</b>搭建信息授权、申请、准入预筛、授信和借款链路；沉淀账户、订单、消息、机构与数据能力；
+                    通过算法推荐＋规则路由，结合用户需求、准入条件和机构策略完成智能匹配。</li>
+                  <li><b>商业化：</b>由按授信收费的CPA升级为与真实借款及利息挂钩的CPS长期分润，使平台、机构和用户价值更加一致。</li>
+                  <li><b>结果：</b>阶段内授信人数约3.5倍、借款人数约5.2倍增长。</li>
+                  <li><b>岗位价值：</b>能够把多方供给抽象为统一能力，并通过智能分发、交易底座和数据经营形成可扩展商业平台，
+                    与WorkBuddy商业化及Agent平台建设的核心要求高度一致。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">5</span><span>为什么把QQ金融商业模式从CPA升级为CPS？</span></summary>
+              <div class="answer">
+                <p><b>核心判断：</b>计费单位应该尽可能贴近用户获得的真实价值。</p>
+                <ul>
+                  <li>CPA与授信人数挂钩，平台容易追求流量和申请量，收入短期且波动，也可能带来过度申请和征信风险。</li>
+                  <li>CPS与真实借款及利息挂钩，平台收入与机构经营结果一致，能支持长期优化转化、留存和贷后质量。</li>
+                  <li>转型不能只改合同，还要补统一链路、数据归因、对账分润、机构治理和用户保护。</li>
+                  <li>迁移到WorkBuddy：订阅、按量或结果付费也应围绕“用户价值单位”设计，而不是简单给模型调用次数定价。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">6</span><span>如果让你设计WorkBuddy商业化体系，你会怎么拆？</span></summary>
+              <div class="answer">
+                <p>我会拆成六层：</p>
+                <ol>
+                  <li><b>用户与场景：</b>个人、团队、企业；通用办公、专业任务、自动化流程、第三方Skill。</li>
+                  <li><b>价值计量：</b>席位、有效任务、模型/工具调用、自动化运行次数、存储和并发。</li>
+                  <li><b>商品与权益：</b>免费、个人Pro、团队、企业；配额、模型、工具、协作、安全和服务等级。</li>
+                  <li><b>交易系统：</b>商品、订单、支付、订阅、续费、升级降级、退款、发票、优惠和渠道。</li>
+                  <li><b>成本与结算：</b>Token、模型路由、工具成本、创作者/服务商分账、预算和毛利监控。</li>
+                  <li><b>经营分析：</b>激活、试用转付费、续费、扩容、流失、LTV/CAC及分群实验。</li>
+                </ol>
+                <p>先选1-2个高频、高价值、可明确计量的场景闭环，再扩套餐和生态分账。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">7</span><span>WorkBuddy应该采用订阅、按量还是混合计费？</span></summary>
+              <div class="answer">
+                <p><b>建议：</b>面向个人和团队采用“基础订阅＋超额按量”，企业增加合同额度与预算控制。</p>
+                <ul>
+                  <li>订阅提供确定性收入，也降低用户每次使用前的决策成本。</li>
+                  <li>按量覆盖高成本模型、深度任务、第三方付费工具和超额使用，避免重度用户侵蚀毛利。</li>
+                  <li>不要直接向用户暴露复杂Token，应映射为任务额度、快速/深度模式、自动化次数等可理解单位。</li>
+                  <li>验证指标：激活率、付费转化、ARPPU、使用深度、毛利率、续费率、降级率和客服投诉。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">8</span><span>如何设计免费版、个人版、团队版和企业版权益？</span></summary>
+              <div class="answer">
+                <ul>
+                  <li><b>免费版：</b>让用户完成首次价值体验，限制高成本模型、任务次数、自动化和历史记忆。</li>
+                  <li><b>个人版：</b>更高额度、更强模型、长上下文、个人知识库、更多工具和优先队列。</li>
+                  <li><b>团队版：</b>共享空间、团队Skill、权限、协作、统一账单、成员用量和资产沉淀。</li>
+                  <li><b>企业版：</b>SSO、审计、数据隔离、预算/配额、合规、私有化或专属部署、SLA和服务支持。</li>
+                </ul>
+                <p>分层原则不是“功能越多越贵”，而是围绕个人效率、团队协作、组织治理三个价值跃迁点设计。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">9</span><span>你会如何搭建商业化漏斗和核心指标？</span></summary>
+              <div class="answer">
+                <p><b>北极星建议：</b>付费用户/组织的“有效任务完成量”或“节省的有效工作时长”，同时约束毛利。</p>
+                <ul>
+                  <li><b>获客：</b>访问、注册、来源质量、CAC。</li>
+                  <li><b>激活：</b>首次任务成功率、TTV、首周有效任务数。</li>
+                  <li><b>付费：</b>试用触达率、权益理解率、结账成功率、试用转付费。</li>
+                  <li><b>留存：</b>周/月活跃、核心场景留存、续费、降级和流失原因。</li>
+                  <li><b>扩张：</b>席位扩容、按量增购、工具购买、NRR。</li>
+                  <li><b>经济性：</b>ARPU、LTV/CAC、单任务成本、Token成本、毛利率。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">10</span><span>模型和Token成本波动时，如何保证毛利？</span></summary>
+              <div class="answer">
+                <ul>
+                  <li>建立“用户—场景—模型—Token—工具—结果”的成本归因，不只看总调用量。</li>
+                  <li>用模型路由把任务分级：轻任务用低成本模型，复杂任务或失败重试才升级。</li>
+                  <li>通过上下文裁剪、缓存、检索优化、提示词压缩和工具结果复用降低无效Token。</li>
+                  <li>设置软/硬配额、预算提醒和异常调用保护；对高成本能力采用按量或加购。</li>
+                  <li>不能只降成本，要同时监控任务成功率、人工接管率、时延和用户留存，避免“便宜但不好用”。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">11</span><span>你如何设计订阅交易链路，避免漏单和权益不一致？</span></summary>
+              <div class="answer">
+                <p>按“商品—订单—支付—订阅—权益—账单—结算”拆分，关键是状态机和幂等。</p>
+                <ul>
+                  <li>明确首次订阅、自动续费、升级、降级、取消、退款、欠费重试和宽限期状态。</li>
+                  <li>支付成功与权益发放解耦，通过事件和补偿机制保证最终一致；所有回调幂等。</li>
+                  <li>建立订单、支付、权益三方对账及异常工单，支持可追溯审计。</li>
+                  <li>面向团队要处理席位、管理员变更、成员离职和按比例计费；面向企业要支持合同额度和发票。</li>
+                </ul>
+                <p>可结合QQ支付与微信支付互通项目，证明你对跨账户支付、验密、风控、反洗钱、资金划转、消息和账单闭环的理解。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">12</span><span>如何通过A/B测试提升付费转化，而不伤害长期价值？</span></summary>
+              <div class="answer">
+                <ul>
+                  <li>先定位漏斗断点，再提出单一假设，例如用户未理解权益，而不是直接测试降价。</li>
+                  <li>主指标可用结账转化或试用转付费；护栏指标包括退款、投诉、次月留存、任务成功率和毛利。</li>
+                  <li>按新老用户、场景、使用深度和成本分群，避免平均数掩盖结构差异。</li>
+                  <li>设置最小样本、实验周期和显著性；促销实验要延长观察续费与价格敏感度。</li>
+                  <li>用平安名单/折扣/流程迭代与招联转化提升案例证明方法论。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">13</span><span>AI产品商业化有哪些特有的合规和用户信任问题？</span></summary>
+              <div class="answer">
+                <ul>
+                  <li><b>数据边界：</b>用户内容、企业知识、提示词和工具数据的采集、用途、保留和删除。</li>
+                  <li><b>授权：</b>Agent调用邮件、文件、支付或外部系统时，需要最小权限、显式确认和可撤销。</li>
+                  <li><b>结果责任：</b>高风险任务要有风险提示、人工确认、可解释日志与可追溯操作。</li>
+                  <li><b>计费透明：</b>说明计费单位、配额、超额、自动续费、退款和第三方费用。</li>
+                  <li><b>内容与知识产权：</b>输出来源、版权、企业数据隔离及创作者分账。</li>
+                </ul>
+                <p>迁移证据：QQ资金周转的最小字段、服务方提示和用户选择权；QQ余额转微信的同名核验与授权边界。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">14</span><span>如何评价一个Agent功能是否值得收费？</span></summary>
+              <div class="answer">
+                <p>同时满足四个条件：</p>
+                <ol>
+                  <li><b>价值明确：</b>解决高频或高价值任务，用户能感知节省时间、降低错误或带来收益。</li>
+                  <li><b>效果稳定：</b>任务成功率、正确性、时延和可控性达到场景门槛。</li>
+                  <li><b>可计量：</b>价值单位和成本单位可被稳定记录，支持权益和账单。</li>
+                  <li><b>经济可行：</b>用户愿付价格覆盖模型、工具、服务和渠道成本，并具备合理毛利。</li>
+                </ol>
+                <p>不要以“模型先进”作为收费理由，应以任务结果和持续使用价值为依据。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">15</span><span>你没有完整Agent商业化上线案例，为什么我们要选你？</span></summary>
+              <div class="answer">
+                <div class="answer-script">
+                  Agent商业化上线案例的缺口是客观存在的，我不会把AI实践包装成已经成熟的收费案例。但我并非只做概念学习：
+                  一方面，我主导过QQ运动面向千万级用户的实时/离线AI个性化策略；另一方面，我作为部门AI探索先行者，
+                  正在以QQ运动为试点重构产品、设计、研发和测试的协作流程。这个岗位不仅需要理解模型，
+                  还要把能力做成可计费、可交易、可经营、可扩展的产品。我过去持续解决的正是这类问题：从CPA到CPS、
+                  从多机构差异到统一平台、从跨账户授权到支付与账单闭环，并承担实际经营结果。下一步我需要补齐的是Agent任务评测、
+                  Token成本、模型路由、订阅权益和开发者生态。我能提供的是成熟的商业化基本功、真实AI流程实践和复杂系统落地能力。
+                </div>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">16</span><span>讲一个跨团队冲突最复杂的项目，你如何做取舍？</span></summary>
+              <div class="answer">
+                <p><b>推荐案例：QQ支付与微信支付跨端互通。</b></p>
+                <ul>
+                  <li><b>项目复杂度：</b>面向QQ与微信两大支付生态，同步推进QQ红包、转账、收款、代付款接入微信支付，
+                    以及QQ余额转微信零钱两条主线，涉及跨产品、跨账户体系和跨底层资金系统改造。</li>
+                  <li><b>目标统一：</b>将多方共同目标定义为“让用户安全、合规、可理解、可追溯地跨端支付与流转资金”，
+                    避免团队只从各自系统边界出发。</li>
+                  <li><b>风险拆解：</b>与法务、风控逐项明确实名主体、授权范围、支付验密、反洗钱、账户管控、责任边界、
+                    异常补偿和账单可追溯要求。</li>
+                  <li><b>协同机制：</b>牵引QQ、微信支付、微信开放平台、FIT及法务、风控等多方完成顶层方案、责任矩阵、
+                    接口依赖和里程碑设计，将争议转化为可验证的产品规则与技术机制，并分阶段完成交付。</li>
+                  <li><b>最终结果：</b>功能上线后登上微博、脉脉等平台热搜；QQ余额转入微信的日均金额达到数千万元量级，
+                    验证了真实用户需求和规模化交易价值。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">17</span><span>QQ运动的穿戴生态与AI个性化升级，你具体做了什么？</span></summary>
+              <div class="answer">
+                <div class="answer-script">
+                  我负责两部分工作。第一部分是穿戴生态平台化：主导Apple Watch、小米、华为、佳明、荣耀、OPPO等厂商接入，
+                  不只是逐家完成项目对接，更重要的是把设备能力、数据协议和状态差异抽象为统一标准，沉淀授权、数据字段、同步口径、
+                  联调验收、数据质量和异常处置规范，让后续生态扩展从定制项目转向标准化接入。第二部分是面向千万级用户的AI个性化升级：
+                  我按用户价值和场景时效性设计实时与离线双模式，高价值用户及小范围强时效场景实时生成，低价值及规模化场景离线批量生成；
+                  再结合用户状态、时间等信号完成千人千面决策。项目难点是万级离线内容模板生产、复杂状态逻辑判断和文本质量校验，
+                  核心取舍是在内容效果、响应效率与生成成本之间建立可规模化运行的平衡。
+                </div>
+                <p><b>面试前继续补充：</b>个性化内容的具体形态、实时/离线覆盖比例、质量校验指标、成本变化、上线时间及效果数据。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">18</span><span>入职后30/60/90天你会做什么？</span></summary>
+              <div class="answer">
+                <ul>
+                  <li><b>0-30天：</b>理解产品、用户、现有套餐、成本结构和交易链路；访谈研发、销售、运营、财务和重点客户；
+                    建立商业化漏斗基线。</li>
+                  <li><b>31-60天：</b>确定1个优先商业场景，完成价值单位、套餐权益、计费和成本模型；
+                    修复一个高影响转化断点。</li>
+                  <li><b>61-90天：</b>上线或灰度首个方案，建立收入、留存、毛利和体验护栏；沉淀商品、订单、权益、
+                    计量和数据能力的长期路线图。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">19</span><span>如果商业收入目标与用户体验冲突，你如何决策？</span></summary>
+              <div class="answer">
+                <p>先区分短期转化与长期价值，不能把所有曝光和付费墙都当成收入优化。</p>
+                <ul>
+                  <li>明确底线：不能误导、强迫、隐瞒自动续费或牺牲数据安全。</li>
+                  <li>判断用户获得价值的时点，在价值被感知后再触发付费，而不是在首次体验前阻断。</li>
+                  <li>同时观察收入、留存、退款、投诉和口碑；短期收入上升但长期留存下降的方案不能放量。</li>
+                  <li>用QQ金融从竞价广告向产品化服务转型说明：有时主动放弃短期流量收入，才能建立长期分润。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">20</span><span>你会反问面试官什么？</span></summary>
+              <div class="answer">
+                <ol>
+                  <li>目前WorkBuddy商业化最核心的北极星指标是什么：收入、付费用户、企业客户还是有效任务量？</li>
+                  <li>当前最需要解决的是商品/计费基础能力，还是用户转化、企业方案与生态分账？</li>
+                  <li>商业化产品经理对模型、工程、运营、销售和财务的职责边界如何划分？</li>
+                  <li>未来半年最重要的一个商业化里程碑是什么？这个岗位成功的判断标准是什么？</li>
+                  <li>现有用户中，个人、团队、企业和生态伙伴的收入结构大致如何？</li>
+                </ol>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">21</span><span>你对AI提升研发效率最重要的判断是什么？</span></summary>
+              <div class="answer">
+                <div class="answer-script">
+                  我的核心判断是：AI的最大价值不只是把每个角色原来的工作做快一点，而是重新设计产品交付流程。
+                  如果产品只用AI写PRD、研发只用AI写代码，评审等待、需求歧义、角色交接和后期返工仍然存在，系统效率提升有限。
+                  我们以QQ运动为试点，探索让产品先用AI生成可运行的前端交互，用真实体验完成评审和管理者决策；交互确认后，
+                  再从前端实现生成接口契约、后端框架和测试用例。这样产品承担了部分前端交付职责，研发与测试围绕确定性方案协同，
+                  本质上是把“文档驱动研发”升级为“可运行产品驱动研发”。目前该模式仍在逐步验证，但已经帮助我们形成一个明确方向：
+                  只有打散并重组产品、设计、研发和测试的协作链路，AI才可能带来数量级更高的组织效率提升。
+                </div>
+                <p><b>追问准备：</b>补充一个真实需求的原流程、新流程、使用工具、踩坑过程，以及交付周期和返工次数的前后对比。</p>
+              </div>
+            </details>
+          </div>
+
+          <div class="footer-note">涉及QQ内部业务指标的答案，面试前需再次确认统计口径、个人归因和可披露范围。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="gaps" aria-labelledby="gaps-title">
+      <div class="content-shell">
+        <header class="hero">
+          <p class="eyebrow">GAP ANALYSIS</p>
+          <h1 id="gaps-title">当前缺口与补充指引</h1>
+          <p>你的主要问题不是商业化能力不足，而是AI/Agent证据与最新项目口径尚未形成可验证、可复述的完整闭环。</p>
+          <div class="hero-meta">
+            <span>P0：直接影响面试通过率</span>
+            <span>P1：决定岗位上限</span>
+            <span>P2：增强差异化</span>
+          </div>
+        </header>
+        <div class="content">
+          <h2>缺失内容清单</h2>
+          <table class="gap-table">
+            <thead>
+              <tr>
+                <th>优先级</th>
+                <th>当前缺口</th>
+                <th>具体缺什么</th>
+                <th>需要补充的材料/行动</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="priority p0">P0</span></td>
+                <td><b>Agent商业化直接案例</b></td>
+                <td>没有订阅、按量计费、Token成本、模型路由、Agent权益或企业套餐的完整上线案例。</td>
+                <td>输出一份《WorkBuddy商业化0到1方案》：用户分层、价值单位、套餐、计费、交易、成本、漏斗和实验。</td>
+              </tr>
+              <tr>
+                <td><span class="priority p0">P0</span></td>
+                <td><b>QQ运动AI个性化效果证据</b></td>
+                <td>已有实时/离线架构、千万级用户、万级模板和状态策略，但仍缺覆盖比例、质量指标、成本变化及业务效果。</td>
+                <td>补齐实时/离线流量占比、生成成本、内容通过率、点击/互动/留存提升及实验口径，明确AI升级的独立贡献。</td>
+              </tr>
+              <tr>
+                <td><span class="priority p0">P0</span></td>
+                <td><b>腾讯近期项目证据</b></td>
+                <td>支付Review指标、余额转微信上线日期/交易数据/热搜证据、QQ运动DAU口径和个人归因不完整。</td>
+                <td>补数据截图或内部报表口径、时间线、个人职责RACI、改版前后指标；确认可披露边界。</td>
+              </tr>
+              <tr>
+                <td><span class="priority p1">P1</span></td>
+                <td><b>AI成本与效果指标</b></td>
+                <td>缺Token、上下文、缓存、模型路由、工具调用成本，以及效果/时延/毛利联动经验。</td>
+                <td>建立一个任务成本模型；至少能计算单任务成本、毛利、配额和模型升级策略。</td>
+              </tr>
+              <tr>
+                <td><span class="priority p1">P1</span></td>
+                <td><b>Agent技术深度与量化证据</b></td>
+                <td>已有Vibe Coding、前端交付、接口契约、测试用例及对话式数据分析实践，但Prompt、RAG、Memory、MCP、
+                  评测与可观测性仍缺结构化记录和量化结果。</td>
+                <td>将部门AI流程试点沉淀为完整案例，保留流程前后对比、交付周期、返工率、Prompt、工具调用、失败案例和评测集。</td>
+              </tr>
+              <tr>
+                <td><span class="priority p1">P1</span></td>
+                <td><b>AI订阅与海外商业化</b></td>
+                <td>缺海外订阅、税务、多币种、拒付、退款、App Store/Google Play及企业合同经验。</td>
+                <td>完成竞品订阅拆解；为WorkBuddy设计国内/海外两套交易差异和风险清单。</td>
+              </tr>
+              <tr>
+                <td><span class="priority p1">P1</span></td>
+                <td><b>开发者工具产品化证据</b></td>
+                <td>已有AI生成前端、接口契约和测试用例的企业研发流程实践，但缺IDE产品设计、开发者研究及工具效果评测。</td>
+                <td>记录所用AI开发工具、代码仓库流程和失败点，补齐研发周期、需求返工率、代码采纳率等前后对比指标。</td>
+              </tr>
+              <tr>
+                <td><span class="priority p2">P2</span></td>
+                <td><b>开放平台完整作品</b></td>
+                <td>有API和授权经验，但缺OAuth/Scope/Token全生命周期、SDK、文档站、沙箱和能力市场设计。</td>
+                <td>补一份WorkBuddy开放平台PRD，覆盖注册到首调、凭证管理、配额、日志、审核、灰度和回滚。</td>
+              </tr>
+              <tr>
+                <td><span class="priority p2">P2</span></td>
+                <td><b>高级岗位个人影响力</b></td>
+                <td>目前叙事“协调推动”较多，团队规模、决策权、培养下属和跨团队影响力证据不足。</td>
+                <td>每个项目补充“我判断了什么、否决了什么、推动谁改变、承担什么结果”。</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>四周补齐路线</h2>
+          <div class="roadmap">
+            <article class="week">
+              <div class="week-no">WEEK 01</div>
+              <h3>把事实补完整</h3>
+              <ul>
+                <li>核实腾讯项目时间线</li>
+                <li>补齐3个近期项目指标</li>
+                <li>明确个人RACI</li>
+                <li>确定可披露口径</li>
+              </ul>
+            </article>
+            <article class="week">
+              <div class="week-no">WEEK 02</div>
+              <h3>做AI商业化作品</h3>
+              <ul>
+                <li>拆用户与付费场景</li>
+                <li>设计套餐/计费/权益</li>
+                <li>建立Token成本模型</li>
+                <li>画商业化漏斗</li>
+              </ul>
+            </article>
+            <article class="week">
+              <div class="week-no">WEEK 03</div>
+              <h3>完成Agent实操</h3>
+              <ul>
+                <li>搭建一个可运行Agent</li>
+                <li>接入知识库或MCP</li>
+                <li>制作20-50条评测集</li>
+                <li>记录失败与优化</li>
+              </ul>
+            </article>
+            <article class="week">
+              <div class="week-no">WEEK 04</div>
+              <h3>面试压测</h3>
+              <ul>
+                <li>90秒自我介绍</li>
+                <li>3个项目各讲5分钟</li>
+                <li>商业化Case演练</li>
+                <li>高压追问与复盘</li>
+              </ul>
+            </article>
+          </div>
+
+          <section class="deliverable">
+            <h3>最值得优先制作的补充作品：《WorkBuddy商业化0到1方案》</h3>
+            <ol>
+              <li>用户与场景：个人、团队、企业、创作者/服务商分别为什么付费。</li>
+              <li>价值计量：席位、有效任务、自动化次数、工具调用、存储和并发如何映射。</li>
+              <li>商品权益：免费、Pro、团队、企业套餐，以及升级、降级、试用和加购。</li>
+              <li>交易链路：商品、订单、支付、订阅、续费、退款、发票、权益和异常补偿。</li>
+              <li>成本模型：Token、工具、存储、渠道、客服和分账，计算单任务成本与毛利。</li>
+              <li>经营体系：激活、试用转付费、续费、扩容、流失、LTV/CAC和实验计划。</li>
+              <li>风险控制：数据授权、自动执行确认、计费透明、企业审计及内容/IP边界。</li>
+            </ol>
+            <p><b>面试表达边界：</b>这份作品用于证明迁移能力，必须称为“针对WorkBuddy的产品方案”，不能说成自己的既有上线业绩。</p>
+          </section>
+
+          <h2>面试前必须向你本人补采的信息</h2>
+          <ul>
+            <li>QQ支付Review具体改了哪些页面和状态；改版前后成功率、投诉率、耗时或用户反馈。</li>
+            <li>QQ余额转微信零钱的上线日期、实际能力范围、交易用户数/金额/成功率、热搜平台和个人角色。</li>
+            <li>QQ运动各设备接入时间、覆盖用户比例、统一标准的具体字段、接入周期缩短幅度和数据质量指标。</li>
+            <li>QQ运动AI内容形态、实时/离线覆盖比例、万级模板准确数量、质量校验指标、生成成本与业务效果。</li>
+            <li>你亲自使用过的Agent、AI编程、MCP、Prompt、RAG工具及可演示作品。</li>
+            <li>管理范围、团队规模、培养人员、项目负责人身份和影响他人决策的具体案例。</li>
+          </ul>
+
+          <div class="footer-note">补齐顺序：先补可验证事实，再做AI商业化作品，最后进行面试表达训练。不要用概念性学习替代项目证据。</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const storageKey = "workbuddy-job-kit-editable-v10";
+      const main = document.querySelector("main");
+      const originalContent = main.innerHTML;
+      const buttons = [...document.querySelectorAll("[data-target]")];
+      const views = [...document.querySelectorAll(".view")];
+      const validIds = new Set(views.map((view) => view.id));
+      const editButton = document.getElementById("editButton");
+      const saveButton = document.getElementById("saveButton");
+      const exportButton = document.getElementById("exportButton");
+      const resetButton = document.getElementById("resetButton");
+      const saveState = document.getElementById("saveState");
+      let editing = false;
+      let saveTimer;
+
+      const savedContent = localStorage.getItem(storageKey);
+      if (savedContent) main.innerHTML = savedContent;
+
+      // Keep structural upgrades even when the user has older locally saved edits.
+      [...main.querySelectorAll(".resume-section-title")]
+        .filter((title) => title.textContent.trim() === "代表项目")
+        .forEach((title) => {
+          const projectList = title.nextElementSibling;
+          if (!projectList) return;
+          projectList.classList.remove("two-col");
+          projectList.classList.add("project-list");
+        });
+
+      function currentButtons() {
+        return [...document.querySelectorAll("[data-target]")];
+      }
+
+      function currentViews() {
+        return [...document.querySelectorAll(".view")];
+      }
+
+      function setEditable(enabled) {
+        editing = enabled;
+        document.body.classList.toggle("editing", enabled);
+        editButton.classList.toggle("active", enabled);
+        editButton.textContent = enabled ? "结束编辑" : "开始编辑";
+        currentViews().forEach((view) => {
+          view.contentEditable = enabled ? "true" : "false";
+          view.spellcheck = enabled;
+        });
+        saveState.textContent = enabled ? "编辑中" : "已保存";
+      }
+
+      function saveContent(showFeedback = true) {
+        currentViews().forEach((view) => view.removeAttribute("contenteditable"));
+        localStorage.setItem(storageKey, main.innerHTML);
+        if (editing) currentViews().forEach((view) => view.contentEditable = "true");
+        if (showFeedback) saveState.textContent = "已保存";
+      }
+
+      function scheduleSave() {
+        saveState.textContent = "保存中…";
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => saveContent(true), 500);
+      }
+
+      function activate(id, updateHash = true) {
+        const targetId = validIds.has(id) ? id : "resume";
+        currentViews().forEach((view) => view.classList.toggle("active", view.id === targetId));
+        currentButtons().forEach((button) => {
+          const active = button.dataset.target === targetId;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-current", active ? "page" : "false");
+        });
+        if (updateHash) history.replaceState(null, "", `#${targetId}`);
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }
+
+      currentButtons().forEach((button) => {
+        button.addEventListener("click", () => activate(button.dataset.target));
+      });
+
+      document.getElementById("printButton").addEventListener("click", () => window.print());
+
+      editButton.addEventListener("click", () => {
+        if (editing) saveContent();
+        setEditable(!editing);
+      });
+
+      saveButton.addEventListener("click", () => saveContent());
+
+      main.addEventListener("input", () => {
+        if (editing) scheduleSave();
+      });
+
+      exportButton.addEventListener("click", () => {
+        saveContent(false);
+        const clone = document.documentElement.cloneNode(true);
+        clone.querySelector("body").classList.remove("editing");
+        clone.querySelectorAll("[contenteditable]").forEach((node) => node.removeAttribute("contenteditable"));
+        const source = "<!doctype html>\n" + clone.outerHTML;
+        const blob = new Blob([source], { type: "text/html;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `任腾跃-WorkBuddy求职包-${new Date().toISOString().slice(0, 10)}.html`;
+        link.click();
+        URL.revokeObjectURL(url);
+        saveState.textContent = "已导出";
+      });
+
+      resetButton.addEventListener("click", () => {
+        if (!window.confirm("确定恢复最初版本吗？当前在本机保存的修改将被清除。")) return;
+        localStorage.removeItem(storageKey);
+        main.innerHTML = originalContent;
+        location.reload();
+      });
+
+      function bindSearch(inputId, listId) {
+        const search = document.getElementById(inputId);
+        const list = document.getElementById(listId);
+        if (!search || !list) return;
+        const items = [...list.querySelectorAll("details.qa")];
+        search.addEventListener("input", () => {
+          const query = search.value.trim().toLowerCase();
+          items.forEach((item) => {
+            const matched = !query || item.textContent.toLowerCase().includes(query);
+            item.hidden = !matched;
+            if (query && matched) item.open = true;
+          });
+        });
+      }
+
+      bindSearch("projectSearch", "projectList");
+      bindSearch("qaSearch", "qaList");
+
+      const initial = location.hash.replace("#", "");
+      activate(initial || "resume", false);
+    })();
+  </script>
+</body>
+</html>

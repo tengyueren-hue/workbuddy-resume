@@ -241,16 +241,25 @@
 
     .contact {
       display: grid;
-      grid-template-columns: repeat(2, auto);
+      grid-template-columns: max-content max-content;
       gap: 3px 18px;
+      justify-content: end;
       color: #202938;
       font-size: 8.6pt;
-      text-align: right;
       line-height: 1.45;
+    }
+
+    .contact > span {
+      display: grid;
+      grid-template-columns: 2.5em max-content;
+      column-gap: 4px;
+      align-items: baseline;
+      text-align: left;
     }
 
     .contact strong {
       color: var(--navy);
+      text-align: right;
     }
 
     .resume-section {
@@ -875,7 +884,12 @@
 
       .contact {
         grid-template-columns: 1fr;
+        justify-content: start;
         text-align: left;
+      }
+
+      .contact > span {
+        grid-template-columns: 2.5em minmax(0, 1fr);
       }
 
       .skill-grid {

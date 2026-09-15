@@ -2115,6 +2115,20 @@
       const savedContent = localStorage.getItem(storageKey);
       if (savedContent) main.innerHTML = savedContent;
 
+      // Migrate the interview introduction once without discarding other saved edits.
+      const introMigrationKey = "workbuddy-intro-migration-v11";
+      if (savedContent && !localStorage.getItem(introMigrationKey)) {
+        const originalTemplate = document.createElement("template");
+        originalTemplate.innerHTML = originalContent;
+        const latestIntro = originalTemplate.content.querySelector("#interview .qa-list .qa:first-child");
+        const savedIntro = main.querySelector("#interview .qa-list .qa:first-child");
+        if (latestIntro && savedIntro) {
+          savedIntro.replaceWith(latestIntro.cloneNode(true));
+          localStorage.setItem(storageKey, main.innerHTML);
+        }
+        localStorage.setItem(introMigrationKey, "done");
+      }
+
       // Keep structural upgrades even when the user has older locally saved edits.
       [...main.querySelectorAll(".resume-section-title")]
         .filter((title) => title.textContent.trim() === "代表项目")

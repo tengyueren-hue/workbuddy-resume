@@ -1588,7 +1588,7 @@
           <h1 id="interview-title">产品经理通用面试问题与参考答案</h1>
           <p>围绕个人能力、项目判断、复杂协同、数据决策、商业化与AI实践展开，可根据具体岗位选择案例。</p>
           <div class="hero-meta">
-            <span>21个核心问题</span>
+            <span>30个核心问题</span>
             <span>项目 / 判断 / 数据 / 协同 / AI</span>
             <span>建议先练1、3、4、9、16</span>
           </div>
@@ -1932,6 +1932,132 @@
                 <p><b>追问准备：</b>补充一个真实需求的原流程、新流程、使用工具、踩坑过程，以及交付周期和返工次数的前后对比。</p>
               </div>
             </details>
+
+            <details class="qa">
+              <summary><span class="q-number">22</span><span>你认为AI产品与传统软件产品最大的区别是什么？</span></summary>
+              <div class="answer">
+                <p><b>核心区别：</b>传统软件主要交付确定性功能，AI产品交付的是带概率的任务结果，因此产品经理需要同时设计能力、约束和反馈闭环。</p>
+                <ul>
+                  <li><b>需求定义：</b>不能只写功能流程，还要定义任务边界、输入质量、期望结果和不可接受的错误。</li>
+                  <li><b>交互方式：</b>既要允许自然语言的开放性，也要通过模板、确认、预览和结构化输入降低不确定性。</li>
+                  <li><b>质量管理：</b>从“功能是否可用”转向成功率、准确性、稳定性、时延、成本和人工接管率的综合评估。</li>
+                  <li><b>持续运营：</b>模型、Prompt、知识、工具和用户反馈都会影响效果，产品上线只是持续优化的起点。</li>
+                </ul>
+                <p>我在QQ运动中采用实时与离线双模式，本质上就是在效果、时效、规模和成本之间做AI产品化取舍。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">23</span><span>你会如何建立AI或Agent产品的评测体系？</span></summary>
+              <div class="answer">
+                <p>我会建立“离线评测—线上指标—人工评审—问题回流”四层体系：</p>
+                <ol>
+                  <li><b>定义任务：</b>按核心场景拆分任务类型、难度、用户层级和风险等级，建设真实且持续更新的用例集。</li>
+                  <li><b>结果指标：</b>任务完成率、正确率、指令遵循、工具调用成功率、事实一致性和端到端成功率。</li>
+                  <li><b>体验与效率：</b>首轮解决率、耗时、重试次数、人工接管率、用户采纳率及满意度。</li>
+                  <li><b>成本与风险：</b>单任务Token及工具成本、敏感信息、越权调用、幻觉和不可逆操作比例。</li>
+                  <li><b>闭环：</b>将线上失败案例按根因归类，回流到测试集，用于Prompt、知识、工具和模型迭代。</li>
+                </ol>
+                <p>评测不能只有一个总分；不同场景的错误成本不同，高风险任务必须设置单独门槛和人工确认。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">24</span><span>如何降低大模型幻觉，并建立用户信任？</span></summary>
+              <div class="answer">
+                <ul>
+                  <li><b>减少未知：</b>通过RAG、结构化数据和受控工具提供可靠上下文，并明确知识时效和来源。</li>
+                  <li><b>限制输出：</b>用任务拆解、结构化格式、规则校验和确定性计算避免模型自由发挥。</li>
+                  <li><b>验证结果：</b>对关键事实进行检索交叉验证，对代码、数据和操作结果使用执行器或规则检测。</li>
+                  <li><b>按风险分级：</b>低风险内容允许直接生成；高风险决策展示依据、置信提示并要求用户确认。</li>
+                  <li><b>允许纠错：</b>保留过程日志、来源引用、撤销和反馈入口，让错误可发现、可追溯、可恢复。</li>
+                </ul>
+                <p>产品目标不是承诺“零幻觉”，而是让幻觉发生概率、影响范围和恢复成本都可被管理。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">25</span><span>Prompt、RAG、微调和工具调用分别适合解决什么问题？</span></summary>
+              <div class="answer">
+                <ul>
+                  <li><b>Prompt：</b>适合明确角色、任务步骤、输出格式和少量示例，是成本最低、迭代最快的起点。</li>
+                  <li><b>RAG：</b>适合需要最新、私域或可追溯知识的任务，重点在检索质量、权限、切片和上下文组织。</li>
+                  <li><b>微调：</b>适合稳定、高频且有高质量样本的行为或风格问题，不适合用来记忆频繁变化的事实。</li>
+                  <li><b>工具调用：</b>适合查询实时数据、执行确定性计算或操作外部系统，让模型从“回答”走向“完成任务”。</li>
+                </ul>
+                <p>选择顺序通常是先用Prompt验证任务，再补知识与工具；只有问题稳定、数据充分且收益明确时才考虑微调。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">26</span><span>你如何在AI效果、响应速度和成本之间做取舍？</span></summary>
+              <div class="answer">
+                <p><b>推荐案例：QQ运动千万级用户AI个性化。</b></p>
+                <ul>
+                  <li>先按用户价值、场景时效性和任务复杂度分层，而不是所有请求都使用最强模型实时生成。</li>
+                  <li>对小范围、高价值、强时效场景采用实时生成；对规模化、低时效场景采用离线批量生成与缓存。</li>
+                  <li>通过模型路由、Prompt压缩、上下文裁剪、结果复用和失败升级降低无效消耗。</li>
+                  <li>离线侧重点是万级内容生产、状态映射和文本校验；实时侧重点是延迟、超时、降级与兜底。</li>
+                  <li>最终同时观察内容效果、响应时间、任务成功率和单位用户成本，避免单独追求某一个指标。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">27</span><span>如果让你设计Agent的记忆体系，你会怎么做？</span></summary>
+              <div class="answer">
+                <ul>
+                  <li><b>工作记忆：</b>保存当前任务目标、计划、工具结果和未完成状态，服务一次任务闭环。</li>
+                  <li><b>短期记忆：</b>保存近期会话和阶段性上下文，通过摘要、裁剪和重要性判断控制Token。</li>
+                  <li><b>长期记忆：</b>只沉淀稳定偏好、用户确认事实和可复用资产，并支持来源、更新时间和置信度。</li>
+                  <li><b>组织知识：</b>与个人记忆分离，按角色和空间做权限控制，避免企业数据越权或相互污染。</li>
+                  <li><b>治理：</b>提供查看、修改、删除、过期和不记忆机制；敏感信息默认不自动沉淀。</li>
+                </ul>
+                <p>记忆不是保存得越多越好，关键是需要时能准确召回、不需要时不干扰，并且让用户拥有控制权。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">28</span><span>如何设计Agent的工具调用与MCP能力？</span></summary>
+              <div class="answer">
+                <ul>
+                  <li><b>能力描述：</b>工具名称、用途、参数、返回值和适用边界必须清晰，减少模型误选和错误填参。</li>
+                  <li><b>权限体系：</b>区分读取、写入和高风险操作，采用最小权限、Scope控制、短期凭证和用户授权。</li>
+                  <li><b>执行机制：</b>设置参数校验、超时、重试、幂等、限流和错误码，让失败能够被Agent理解并恢复。</li>
+                  <li><b>安全交互：</b>发送消息、支付、删除等不可逆操作必须预览并二次确认，同时保留审计日志。</li>
+                  <li><b>效果评估：</b>监控工具选择准确率、调用成功率、端到端任务成功率、平均调用次数和失败根因。</li>
+                </ul>
+                <p>MCP解决的是工具接入标准化问题，但产品仍要设计发现、授权、编排、失败恢复和责任边界。</p>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">29</span><span>什么情况下需要多智能体？如何避免系统变得更复杂？</span></summary>
+              <div class="answer">
+                <p><b>判断原则：</b>只有当任务存在明确角色分工、并行价值或专业上下文隔离时，多智能体才可能优于单Agent加工具。</p>
+                <ul>
+                  <li>将复杂目标拆成计划、执行、检查等可验证子任务，为每个Agent定义输入、输出和完成标准。</li>
+                  <li>由统一编排层管理任务状态、依赖、上下文和冲突，避免Agent之间无限对话。</li>
+                  <li>能并行的任务并行，强依赖任务串行；设置最大轮次、预算和超时，防止成本失控。</li>
+                  <li>关键中间产物采用结构化协议传递，并对最终结果进行独立校验或人工确认。</li>
+                  <li>通过消融实验比较单Agent与多Agent的成功率、耗时和成本，证明复杂度确实有收益。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">30</span><span>如何让AI产品形成持续优化的数据飞轮？</span></summary>
+              <div class="answer">
+                <ol>
+                  <li><b>定义成功：</b>记录任务目标、输入条件、模型与工具版本、过程轨迹和最终结果。</li>
+                  <li><b>收集信号：</b>结合显式评价与隐式行为，例如采纳、修改、重试、撤销、人工接管和后续留存。</li>
+                  <li><b>失败归因：</b>区分需求理解、知识缺失、检索、规划、工具、模型输出和产品交互问题。</li>
+                  <li><b>回流改进：</b>将高价值失败案例沉淀到评测集，分别推动Prompt、RAG、工具、模型和流程优化。</li>
+                  <li><b>灰度验证：</b>离线评测通过后再进行线上A/B测试，并监控效果、体验、成本与风险护栏。</li>
+                </ol>
+                <p>数据飞轮不是简单收集更多对话，而是把“结果—根因—改进—验证”形成可重复的产品机制。</p>
+              </div>
+            </details>
           </div>
 
           <div class="footer-note">涉及QQ内部业务指标的答案，面试前需再次确认统计口径、个人归因和可披露范围。</div>
@@ -2153,6 +2279,31 @@
           localStorage.setItem(storageKey, main.innerHTML);
         }
         localStorage.setItem(qaMigrationKey, "done");
+      }
+
+      // Add the AI interview topic set once without overwriting the existing question answers.
+      const aiQaMigrationKey = "workbuddy-ai-qa-migration-v13";
+      if (savedContent && !localStorage.getItem(aiQaMigrationKey)) {
+        const originalTemplate = document.createElement("template");
+        originalTemplate.innerHTML = originalContent;
+        const latestInterview = originalTemplate.content.querySelector("#interview");
+        const savedInterview = main.querySelector("#interview");
+        if (latestInterview && savedInterview) {
+          const latestHero = latestInterview.querySelector(".hero");
+          const savedHero = savedInterview.querySelector(".hero");
+          if (latestHero && savedHero) savedHero.replaceWith(latestHero.cloneNode(true));
+
+          const savedList = savedInterview.querySelector(".qa-list");
+          const savedNumbers = new Set(
+            [...savedInterview.querySelectorAll(".qa-list > .qa .q-number")].map((item) => item.textContent.trim())
+          );
+          [...latestInterview.querySelectorAll(".qa-list > .qa")].slice(21).forEach((question) => {
+            const number = question.querySelector(".q-number")?.textContent.trim();
+            if (savedList && number && !savedNumbers.has(number)) savedList.append(question.cloneNode(true));
+          });
+          localStorage.setItem(storageKey, main.innerHTML);
+        }
+        localStorage.setItem(aiQaMigrationKey, "done");
       }
 
       // Keep structural upgrades even when the user has older locally saved edits.

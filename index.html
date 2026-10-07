@@ -364,7 +364,7 @@
     .resume-list {
       margin: 4px 0 0;
       padding-left: 16px;
-      font-size: 9.25pt;
+      font-size: 9.2pt;
       line-height: 1.58;
     }
 
@@ -375,46 +375,6 @@
 
     .resume-list strong {
       color: #172236;
-    }
-
-    .resume-page:first-child .resume-section {
-      margin-top: 8px;
-    }
-
-    .resume-page:first-child .resume-section-title {
-      margin-bottom: 5px;
-      font-size: 12.3pt;
-    }
-
-    .resume-page:first-child .summary-box {
-      padding: 7px 10px;
-      font-size: 9.4pt;
-      line-height: 1.62;
-    }
-
-    .resume-page:first-child .skill {
-      padding: 5px 7px;
-      font-size: 8.6pt;
-      line-height: 1.45;
-    }
-
-    .resume-page:first-child .job {
-      padding: 6px 0 7px;
-    }
-
-    .resume-page:first-child .project-label {
-      margin: 5px 0 1px;
-      font-size: 9pt;
-    }
-
-    .resume-page:first-child .resume-list {
-      margin-top: 3px;
-      font-size: 9pt;
-      line-height: 1.5;
-    }
-
-    .resume-page:first-child .resume-list li {
-      margin: 1px 0;
     }
 
     .metric {
@@ -437,7 +397,7 @@
     .past-list {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
-      gap: 9px;
+      gap: 0;
     }
 
     .case-library {
@@ -474,7 +434,7 @@
     }
 
     .mini-job {
-      padding: 10.5px 0;
+      padding: 8px 0;
       border-bottom: 1px solid var(--line);
     }
 
@@ -484,14 +444,14 @@
       gap: 10px;
       margin: 0 0 3px;
       color: var(--navy);
-      font-size: 10pt;
+      font-size: 9.9pt;
       line-height: 1.4;
     }
 
     .mini-job p {
-      margin: 4.5px 0;
-      font-size: 9pt;
-      line-height: 1.66;
+      margin: 3px 0;
+      font-size: 9.2pt;
+      line-height: 1.58;
     }
 
     .project-card {
@@ -1152,12 +1112,6 @@
                 <li><b>主导两大支付生态的系统级互通：</b>牵引QQ、微信支付、微信开放平台、FIT及法务、风控等多方，
                   在跨产品、跨账户体系与跨底层资金系统的复杂约束下，完成产品规则、技术链路和合规责任的整体设计，
                   系统解决实名主体、用户授权、资金安全、风险处置及责任边界等核心问题。</li>
-                <li><b>重构QQ核心场景的支付能力：</b>推动红包、转账、收款、代付款等场景全面支持微信支付，贯通支付受理、
-                  结果回传、异常补偿等链路，并融合微信支付风控、反洗钱能力，形成安全、稳定、可规模化复用的跨端支付方案。</li>
-                <li><b>打通QQ余额与微信零钱账户体系：</b>推动QQ余额转入微信零钱从0到1落地，构建微信授权、支付验密、
-                  同名实名核验、账户管控、资金划转、双端消息及账单的完整闭环，实现两大支付账户体系间的合规资金流转。</li>
-                <li><b>实现显著用户与业务价值：</b>功能上线后获得广泛社会关注，登上微博、脉脉等平台热搜；内部监控显示，
-                  QQ余额转入微信的日均金额达到<span class="metric">数千万元量级</span>。</li>
               </ul>
 
             </article>
@@ -1167,6 +1121,16 @@
 
         <article class="resume-page">
           <section class="resume-section" style="margin-top:0">
+            <span class="project-label">QQ×微信支付生态互通｜支付能力与业务结果</span>
+            <ul class="resume-list">
+              <li><b>重构QQ核心场景的支付能力：</b>推动红包、转账、收款、代付款等场景全面支持微信支付，贯通支付受理、
+                结果回传、异常补偿等链路，并融合微信支付风控、反洗钱能力，形成安全、稳定、可规模化复用的跨端支付方案。</li>
+              <li><b>打通QQ余额与微信零钱账户体系：</b>推动QQ余额转入微信零钱从0到1落地，构建微信授权、支付验密、
+                同名实名核验、账户管控、资金划转、双端消息及账单的完整闭环，实现两大支付账户体系间的合规资金流转。</li>
+              <li><b>实现显著用户与业务价值：</b>功能上线后获得广泛社会关注，登上微博、脉脉等平台热搜；内部监控显示，
+                QQ余额转入微信的日均金额达到<span class="metric">数千万元量级</span>。</li>
+            </ul>
+
             <span class="project-label">QQ消费金融借贷服务平台｜平台化转型与0到1建设</span>
             <ul class="resume-list">
               <li><b>主导业务平台化转型：</b>推动QQ消费金融从广告导流模式升级为一站式借贷服务平台，
@@ -2507,52 +2471,65 @@
       function normalizeAndBalanceResumePages() {
         const resumePages = [...main.querySelectorAll("#resume .resume-page")];
         const firstPage = resumePages[0];
-        if (!firstPage) return false;
-        let changed = false;
+        const secondPage = resumePages[1];
+        if (!firstPage || !secondPage) return false;
+        const before = main.querySelector("#resume")?.innerHTML || "";
 
         [...main.querySelectorAll("#resume .resume-section-title")].forEach((title) => {
           const value = title.textContent.trim();
           if (value === "腾讯经历（续）") {
             title.remove();
-            changed = true;
           } else if (value.includes("QQ消费金融借贷服务平台")) {
             title.classList.remove("resume-section-title");
             title.classList.add("project-label");
-            changed = true;
           }
         });
+
+        const originalTemplate = document.createElement("template");
+        originalTemplate.innerHTML = originalContent;
+        const itemKey = (item) => item.querySelector("b, strong")?.textContent.trim()
+          || item.textContent.trim().split("：")[0];
+        const sourcePaymentLabels = [...originalTemplate.content.querySelectorAll("#resume .project-label")]
+          .filter((label) => label.textContent.includes("QQ×微信支付生态互通"));
+        const sourceItems = sourcePaymentLabels.flatMap((label) => [...(label.nextElementSibling?.children || [])]);
+        const sourceKeys = sourceItems.map(itemKey).filter(Boolean);
 
         const paymentLabels = [...main.querySelectorAll("#resume .project-label")]
           .filter((label) => label.textContent.includes("QQ×微信支付生态互通"));
         const firstPaymentLabel = paymentLabels.find((label) => firstPage.contains(label));
         const firstPaymentList = firstPaymentLabel?.nextElementSibling;
         if (firstPaymentList?.matches("ul")) {
-          paymentLabels.filter((label) => label !== firstPaymentLabel).forEach((label) => {
-            const list = label.nextElementSibling;
-            if (list?.matches("ul")) {
-              [...list.children].forEach((item) => firstPaymentList.append(item));
-              list.remove();
-            }
-            label.remove();
-            changed = true;
-          });
-
-          const originalTemplate = document.createElement("template");
-          originalTemplate.innerHTML = originalContent;
-          const sourcePaymentLabel = [...originalTemplate.content.querySelectorAll("#resume .project-label")]
-            .find((label) => label.textContent.includes("QQ×微信支付生态互通"));
-          const sourceItems = [...(sourcePaymentLabel?.nextElementSibling?.children || [])];
-          const itemKey = (item) => item.querySelector("b, strong")?.textContent.trim()
-            || item.textContent.trim().split("：")[0];
-          const existingKeys = new Set([...firstPaymentList.children].map(itemKey));
+          const currentItems = paymentLabels.flatMap((label) => [...(label.nextElementSibling?.children || [])]);
+          const currentByKey = new Map(currentItems.map((item) => [itemKey(item), item]));
           sourceItems.forEach((item) => {
             const key = itemKey(item);
-            if (key && !existingKeys.has(key)) {
-              firstPaymentList.append(item.cloneNode(true));
-              existingKeys.add(key);
-              changed = true;
-            }
+            if (key && !currentByKey.has(key)) currentByKey.set(key, item.cloneNode(true));
           });
+          const orderedItems = [
+            ...sourceKeys.map((key) => currentByKey.get(key)).filter(Boolean),
+            ...[...currentByKey.entries()].filter(([key]) => !sourceKeys.includes(key)).map(([, item]) => item)
+          ];
+
+          paymentLabels.filter((label) => label !== firstPaymentLabel).forEach((label) => {
+            const list = label.nextElementSibling;
+            if (list?.matches("ul")) list.remove();
+            label.remove();
+          });
+          firstPaymentList.replaceChildren(...orderedItems.slice(0, 1));
+
+          const secondSection = secondPage.querySelector(".resume-section");
+          const financeTitle = [...secondPage.querySelectorAll(".project-label")]
+            .find((label) => label.textContent.includes("QQ消费金融借贷服务平台"));
+          const resultItems = orderedItems.slice(1);
+          if (secondSection && resultItems.length) {
+            const resultLabel = document.createElement("span");
+            resultLabel.className = "project-label";
+            resultLabel.textContent = "QQ×微信支付生态互通｜支付能力与业务结果";
+            const resultList = firstPaymentList.cloneNode(false);
+            resultList.replaceChildren(...resultItems);
+            if (financeTitle) financeTitle.before(resultLabel, resultList);
+            else secondSection.prepend(resultLabel, resultList);
+          }
         }
 
         [...main.querySelectorAll("#resume h1, #resume h2, #resume h3, #resume span, #resume div")]
@@ -2561,10 +2538,87 @@
             if (title.classList.contains("resume-section-title") || !title.classList.contains("project-label")) {
               title.classList.remove("resume-section-title");
               title.classList.add("project-label");
-              changed = true;
             }
           });
-        return changed;
+
+        const financeLabels = [...main.querySelectorAll("#resume .project-label")]
+          .filter((label) => label.textContent.trim().startsWith("QQ消费金融借贷服务平台"));
+        const secondSection = secondPage.querySelector(".resume-section");
+        if (financeLabels.length && secondSection) {
+          const financeTitle = financeLabels[0].textContent.trim().replace(/（续）$/, "");
+          const financeItems = [];
+          const financeKeys = new Set();
+          financeLabels.forEach((label) => {
+            const list = label.nextElementSibling;
+            if (list?.matches("ul")) {
+              [...list.children].forEach((item) => {
+                const key = itemKey(item);
+                if (!financeKeys.has(key)) {
+                  financeItems.push(item);
+                  financeKeys.add(key);
+                }
+              });
+              list.remove();
+            }
+            label.remove();
+          });
+
+          const secondFinanceLabel = document.createElement("span");
+          secondFinanceLabel.className = "project-label";
+          secondFinanceLabel.textContent = financeTitle;
+          const secondFinanceList = document.createElement("ul");
+          secondFinanceList.className = "resume-list";
+          secondFinanceList.replaceChildren(...financeItems);
+          secondSection.append(secondFinanceLabel, secondFinanceList);
+
+          const firstRect = firstPage.getBoundingClientRect();
+          const firstStyle = getComputedStyle(firstPage);
+          const usableBottom = firstRect.bottom - parseFloat(firstStyle.paddingBottom || "0") - 10;
+          const contentBottom = Math.max(
+            firstRect.top,
+            ...[...firstPage.querySelectorAll(
+              ".resume-header, .resume-section-title, .summary-box, .skill, .job-head, .project-label, .resume-list li"
+            )]
+              .filter((node) => getComputedStyle(node).display !== "none")
+              .map((node) => node.getBoundingClientRect().bottom)
+          );
+          const available = usableBottom - contentBottom;
+          if (available >= 100) {
+            const outerHeight = (node) => {
+              const style = getComputedStyle(node);
+              return node.getBoundingClientRect().height
+                + parseFloat(style.marginTop || "0")
+                + parseFloat(style.marginBottom || "0");
+            };
+            const listStyle = getComputedStyle(secondFinanceList);
+            let required = outerHeight(secondFinanceLabel)
+              + parseFloat(listStyle.marginTop || "0")
+              + parseFloat(listStyle.marginBottom || "0");
+            const firstFinanceItems = [];
+            [...secondFinanceList.children].forEach((item) => {
+              const itemHeight = outerHeight(item);
+              if (required + itemHeight <= available - 12) {
+                firstFinanceItems.push(item);
+                required += itemHeight;
+              }
+            });
+            const firstTarget = firstPage.querySelector(".job") || firstPage.querySelector(".resume-section:last-of-type");
+            if (firstTarget && firstFinanceItems.length) {
+              const firstFinanceLabel = secondFinanceLabel.cloneNode(true);
+              const firstFinanceList = secondFinanceList.cloneNode(false);
+              firstFinanceList.replaceChildren(...firstFinanceItems);
+              firstTarget.append(firstFinanceLabel, firstFinanceList);
+              if (secondFinanceList.children.length) {
+                secondFinanceLabel.textContent = financeTitle + "（续）";
+              } else {
+                secondFinanceList.remove();
+                secondFinanceLabel.remove();
+              }
+            }
+          }
+        }
+        const after = main.querySelector("#resume")?.innerHTML || "";
+        return before !== after;
       }
 
       const resumeStructureChanged = normalizeAndBalanceResumePages();

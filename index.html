@@ -213,7 +213,7 @@
       grid-template-columns: 1fr auto;
       align-items: end;
       gap: 18px;
-      padding-bottom: 7px;
+      padding-bottom: 5px;
       border-bottom: 3px solid var(--navy);
     }
 
@@ -237,6 +237,21 @@
       color: var(--navy);
       font-size: 11pt;
       font-weight: 800;
+    }
+
+    .performance-badge {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 3px;
+      padding: 2px 8px;
+      border: 1px solid #bfd2ee;
+      border-radius: 999px;
+      color: var(--navy);
+      background: #edf4ff;
+      font-size: 8.4pt;
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: 0.01em;
     }
 
     .contact {
@@ -263,7 +278,7 @@
     }
 
     .resume-section {
-      margin-top: 9px;
+      margin-top: 8px;
     }
 
     .resume-section-title {
@@ -286,7 +301,7 @@
     }
 
     .summary-box {
-      padding: 8px 10px;
+      padding: 7px 10px;
       background: #f4f7fb;
       font-size: 9.4pt;
       line-height: 1.62;
@@ -299,7 +314,7 @@
     }
 
     .skill {
-      padding: 6px 7px;
+      padding: 5px 7px;
       background: #f5f7fa;
       border: 1px solid #e5eaf1;
       border-radius: 3px;
@@ -315,7 +330,7 @@
     }
 
     .job {
-      padding: 7px 0 8px;
+      padding: 6px 0 7px;
       border-bottom: 1px solid #d9dee7;
     }
 
@@ -350,11 +365,11 @@
       margin: 3px 0 0;
       padding-left: 16px;
       font-size: 9pt;
-      line-height: 1.58;
+      line-height: 1.5;
     }
 
     .resume-list li {
-      margin: 1.5px 0;
+      margin: 1px 0;
       padding-left: 1px;
     }
 
@@ -1028,6 +1043,7 @@
                 <h2 class="resume-name">任腾跃</h2>
                 <span class="target-title">智能体商业化 / 平台产品经理</span>
               </div>
+              <div class="performance-badge">腾讯五次绩效考核｜3次 Outstanding</div>
             </div>
             <div class="contact">
               <span><strong>手机</strong> 176-1282-8378</span>
@@ -1643,7 +1659,7 @@
                   <br><br>
                   如果总结我的优势，我认为主要有三点：第一，能够理解技术和业务，并把复杂场景抽象成可落地的平台能力；第二，具备跨团队、
                   跨平台和强合规场景下推进复杂项目的经验；第三，对AI保持高强度的学习和实践，愿意持续试错并沉淀方法。
-                  在腾讯的五次绩效考核中，我获得过一次Outstanding。这既是对结果的认可，也说明我能够在业务不断变化的情况下快速适应并持续交付。
+                  在腾讯的五次绩效考核中，我三次获得Outstanding。这既是对结果的认可，也说明我能够在业务不断变化的情况下快速适应并持续交付。
                   以上是我的自我介绍，谢谢面试官。
                 </div>
               </div>
@@ -2367,6 +2383,27 @@
         });
         persistDraft(main.innerHTML);
         localStorage.setItem(projectAiQaMigrationKey, "done");
+      }
+
+      // Add the verified Tencent performance highlight and update the interview wording once.
+      const performanceMigrationKey = "workbuddy-performance-migration-v16";
+      if (savedContent && !localStorage.getItem(performanceMigrationKey)) {
+        const originalTemplate = document.createElement("template");
+        originalTemplate.innerHTML = originalContent;
+        const latestBadge = originalTemplate.content.querySelector("#resume .performance-badge");
+        const savedNameRow = main.querySelector("#resume .resume-name-row");
+        if (latestBadge && savedNameRow && !main.querySelector("#resume .performance-badge")) {
+          savedNameRow.insertAdjacentElement("afterend", latestBadge.cloneNode(true));
+        }
+        const savedIntro = main.querySelector("#interview .qa-list .qa:first-child .answer-script");
+        if (savedIntro) {
+          savedIntro.innerHTML = savedIntro.innerHTML.replace(
+            "我获得过一次Outstanding",
+            "我三次获得Outstanding"
+          );
+        }
+        persistDraft(main.innerHTML);
+        localStorage.setItem(performanceMigrationKey, "done");
       }
 
       saveState.textContent = savedContent ? "已恢复本机保存" : "未修改";

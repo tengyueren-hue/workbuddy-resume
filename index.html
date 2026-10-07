@@ -2503,6 +2503,73 @@
         localStorage.setItem(resumePageBalanceMigrationKey, "done");
       }
 
+      // Repair older locally saved resume structures on every load without replacing user-edited wording.
+      function normalizeAndBalanceResumePages() {
+        const resumePages = [...main.querySelectorAll("#resume .resume-page")];
+        const firstPage = resumePages[0];
+        if (!firstPage) return false;
+        let changed = false;
+
+        [...main.querySelectorAll("#resume .resume-section-title")].forEach((title) => {
+          const value = title.textContent.trim();
+          if (value === "腾讯经历（续）") {
+            title.remove();
+            changed = true;
+          } else if (value.includes("QQ消费金融借贷服务平台")) {
+            title.classList.remove("resume-section-title");
+            title.classList.add("project-label");
+            changed = true;
+          }
+        });
+
+        const paymentLabels = [...main.querySelectorAll("#resume .project-label")]
+          .filter((label) => label.textContent.includes("QQ×微信支付生态互通"));
+        const firstPaymentLabel = paymentLabels.find((label) => firstPage.contains(label));
+        const firstPaymentList = firstPaymentLabel?.nextElementSibling;
+        if (firstPaymentList?.matches("ul")) {
+          paymentLabels.filter((label) => label !== firstPaymentLabel).forEach((label) => {
+            const list = label.nextElementSibling;
+            if (list?.matches("ul")) {
+              [...list.children].forEach((item) => firstPaymentList.append(item));
+              list.remove();
+            }
+            label.remove();
+            changed = true;
+          });
+
+          const originalTemplate = document.createElement("template");
+          originalTemplate.innerHTML = originalContent;
+          const sourcePaymentLabel = [...originalTemplate.content.querySelectorAll("#resume .project-label")]
+            .find((label) => label.textContent.includes("QQ×微信支付生态互通"));
+          const sourceItems = [...(sourcePaymentLabel?.nextElementSibling?.children || [])];
+          const itemKey = (item) => item.querySelector("b, strong")?.textContent.trim()
+            || item.textContent.trim().split("：")[0];
+          const existingKeys = new Set([...firstPaymentList.children].map(itemKey));
+          sourceItems.forEach((item) => {
+            const key = itemKey(item);
+            if (key && !existingKeys.has(key)) {
+              firstPaymentList.append(item.cloneNode(true));
+              existingKeys.add(key);
+              changed = true;
+            }
+          });
+        }
+
+        [...main.querySelectorAll("#resume h1, #resume h2, #resume h3, #resume span, #resume div")]
+          .filter((node) => node.textContent.trim().startsWith("QQ消费金融借贷服务平台") && node.children.length === 0)
+          .forEach((title) => {
+            if (title.classList.contains("resume-section-title") || !title.classList.contains("project-label")) {
+              title.classList.remove("resume-section-title");
+              title.classList.add("project-label");
+              changed = true;
+            }
+          });
+        return changed;
+      }
+
+      const resumeStructureChanged = normalizeAndBalanceResumePages();
+      if (savedContent && resumeStructureChanged) persistDraft(main.innerHTML);
+
       saveState.textContent = savedContent ? "已恢复本机保存" : "未修改";
 
       // Keep structural upgrades even when the user has older locally saved edits.

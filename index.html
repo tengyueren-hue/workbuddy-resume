@@ -202,7 +202,7 @@
     .resume-page {
       width: 210mm;
       min-height: 297mm;
-      padding: 11mm 14mm 10mm;
+      padding: 11mm 14mm 9mm;
       color: #333d4d;
       background: var(--paper);
       box-shadow: var(--shadow);
@@ -278,16 +278,16 @@
     }
 
     .resume-section {
-      margin-top: 8px;
+      margin-top: 9px;
     }
 
     .resume-section-title {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin: 0 0 5px;
+      margin: 0 0 6px;
       color: var(--navy);
-      font-size: 12.3pt;
+      font-size: 12.5pt;
       line-height: 1.25;
       font-weight: 850;
     }
@@ -301,10 +301,10 @@
     }
 
     .summary-box {
-      padding: 7px 10px;
+      padding: 8px 10px;
       background: #f4f7fb;
-      font-size: 9.4pt;
-      line-height: 1.62;
+      font-size: 9.5pt;
+      line-height: 1.66;
     }
 
     .skill-grid {
@@ -314,12 +314,12 @@
     }
 
     .skill {
-      padding: 5px 7px;
+      padding: 6px 7px;
       background: #f5f7fa;
       border: 1px solid #e5eaf1;
       border-radius: 3px;
-      font-size: 8.6pt;
-      line-height: 1.45;
+      font-size: 8.8pt;
+      line-height: 1.5;
     }
 
     .skill b {
@@ -330,7 +330,7 @@
     }
 
     .job {
-      padding: 6px 0 7px;
+      padding: 7px 0 8px;
       border-bottom: 1px solid #d9dee7;
     }
 
@@ -355,21 +355,21 @@
 
     .project-label {
       display: inline-block;
-      margin: 5px 0 1px;
+      margin: 6px 0 2px;
       color: #18283f;
-      font-size: 9pt;
+      font-size: 9.2pt;
       font-weight: 850;
     }
 
     .resume-list {
-      margin: 3px 0 0;
+      margin: 4px 0 0;
       padding-left: 16px;
-      font-size: 9pt;
-      line-height: 1.5;
+      font-size: 9.25pt;
+      line-height: 1.58;
     }
 
     .resume-list li {
-      margin: 1px 0;
+      margin: 1.5px 0;
       padding-left: 1px;
     }
 
@@ -434,7 +434,7 @@
     }
 
     .mini-job {
-      padding: 8px 0;
+      padding: 10.5px 0;
       border-bottom: 1px solid var(--line);
     }
 
@@ -444,14 +444,14 @@
       gap: 10px;
       margin: 0 0 3px;
       color: var(--navy);
-      font-size: 9.8pt;
+      font-size: 10pt;
       line-height: 1.4;
     }
 
     .mini-job p {
-      margin: 3px 0;
-      font-size: 8.8pt;
-      line-height: 1.58;
+      margin: 4.5px 0;
+      font-size: 9pt;
+      line-height: 1.66;
     }
 
     .project-card {
@@ -1114,10 +1114,6 @@
                   系统解决实名主体、用户授权、资金安全、风险处置及责任边界等核心问题。</li>
                 <li><b>重构QQ核心场景的支付能力：</b>推动红包、转账、收款、代付款等场景全面支持微信支付，贯通支付受理、
                   结果回传、异常补偿等链路，并融合微信支付风控、反洗钱能力，形成安全、稳定、可规模化复用的跨端支付方案。</li>
-                <li><b>打通QQ余额与微信零钱账户体系：</b>推动QQ余额转入微信零钱从0到1落地，构建微信授权、支付验密、
-                  同名实名核验、账户管控、资金划转、双端消息及账单的完整闭环，实现两大支付账户体系间的合规资金流转。</li>
-                <li><b>实现显著用户与业务价值：</b>功能上线后获得广泛社会关注，登上微博、脉脉等平台热搜；内部监控显示，
-                  QQ余额转入微信的日均金额达到<span class="metric">数千万元量级</span>。</li>
               </ul>
 
             </article>
@@ -1128,6 +1124,14 @@
         <article class="resume-page">
           <section class="resume-section" style="margin-top:0">
             <h2 class="resume-section-title">腾讯经历（续）</h2>
+            <span class="project-label">QQ×微信支付生态互通｜跨端支付基础设施建设（续）</span>
+            <ul class="resume-list">
+              <li><b>打通QQ余额与微信零钱账户体系：</b>推动QQ余额转入微信零钱从0到1落地，构建微信授权、支付验密、
+                同名实名核验、账户管控、资金划转、双端消息及账单的完整闭环，实现两大支付账户体系间的合规资金流转。</li>
+              <li><b>实现显著用户与业务价值：</b>功能上线后获得广泛社会关注，登上微博、脉脉等平台热搜；内部监控显示，
+                QQ余额转入微信的日均金额达到<span class="metric">数千万元量级</span>。</li>
+            </ul>
+
             <span class="project-label">QQ消费金融借贷服务平台｜平台化转型与0到1建设</span>
             <ul class="resume-list">
               <li><b>主导业务平台化转型：</b>推动QQ消费金融从广告导流模式升级为一站式借贷服务平台，
@@ -2404,6 +2408,27 @@
         }
         persistDraft(main.innerHTML);
         localStorage.setItem(performanceMigrationKey, "done");
+      }
+
+      // Rebalance the two resume pages while preserving any wording edited by the user.
+      const resumeLayoutMigrationKey = "workbuddy-resume-layout-migration-v17";
+      if (savedContent && !localStorage.getItem(resumeLayoutMigrationKey)) {
+        const resumePages = [...main.querySelectorAll("#resume .resume-page")];
+        const paymentLabel = [...(resumePages[0]?.querySelectorAll(".project-label") || [])]
+          .find((label) => label.textContent.includes("QQ×微信支付生态互通"));
+        const paymentList = paymentLabel?.nextElementSibling;
+        const secondSection = resumePages[1]?.querySelector(".resume-section");
+        if (paymentList?.matches("ul") && secondSection && paymentList.children.length > 2) {
+          const continuationLabel = paymentLabel.cloneNode(true);
+          continuationLabel.textContent = continuationLabel.textContent.replace(/（续）$/, "") + "（续）";
+          const continuationList = paymentList.cloneNode(false);
+          [...paymentList.children].slice(2).forEach((item) => continuationList.append(item));
+          const heading = secondSection.querySelector(".resume-section-title");
+          heading?.insertAdjacentElement("afterend", continuationLabel);
+          continuationLabel.insertAdjacentElement("afterend", continuationList);
+          persistDraft(main.innerHTML);
+        }
+        localStorage.setItem(resumeLayoutMigrationKey, "done");
       }
 
       saveState.textContent = savedContent ? "已恢复本机保存" : "未修改";

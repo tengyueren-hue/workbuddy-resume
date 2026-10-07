@@ -1934,128 +1934,127 @@
             </details>
 
             <details class="qa">
-              <summary><span class="q-number">22</span><span>你认为AI产品与传统软件产品最大的区别是什么？</span></summary>
+              <summary><span class="q-number">22</span><span>为什么要对QQ运动进行AI化升级？你想解决什么问题？</span></summary>
               <div class="answer">
-                <p><b>核心区别：</b>传统软件主要交付确定性功能，AI产品交付的是带概率的任务结果，因此产品经理需要同时设计能力、约束和反馈闭环。</p>
+                <p><b>项目背景：</b>QQ运动日活约1000万、月活约5000万，原有产品能够展示步数和运动数据，但数据偏静态，缺少个性化解释和下一步行动引导。</p>
                 <ul>
-                  <li><b>需求定义：</b>不能只写功能流程，还要定义任务边界、输入质量、期望结果和不可接受的错误。</li>
-                  <li><b>交互方式：</b>既要允许自然语言的开放性，也要通过模板、确认、预览和结构化输入降低不确定性。</li>
-                  <li><b>质量管理：</b>从“功能是否可用”转向成功率、准确性、稳定性、时延、成本和人工接管率的综合评估。</li>
-                  <li><b>持续运营：</b>模型、Prompt、知识、工具和用户反馈都会影响效果，产品上线只是持续优化的起点。</li>
-                </ul>
-                <p>我在QQ运动中采用实时与离线双模式，本质上就是在效果、时效、规模和成本之间做AI产品化取舍。</p>
-              </div>
-            </details>
-
-            <details class="qa">
-              <summary><span class="q-number">23</span><span>你会如何建立AI或Agent产品的评测体系？</span></summary>
-              <div class="answer">
-                <p>我会建立“离线评测—线上指标—人工评审—问题回流”四层体系：</p>
-                <ol>
-                  <li><b>定义任务：</b>按核心场景拆分任务类型、难度、用户层级和风险等级，建设真实且持续更新的用例集。</li>
-                  <li><b>结果指标：</b>任务完成率、正确率、指令遵循、工具调用成功率、事实一致性和端到端成功率。</li>
-                  <li><b>体验与效率：</b>首轮解决率、耗时、重试次数、人工接管率、用户采纳率及满意度。</li>
-                  <li><b>成本与风险：</b>单任务Token及工具成本、敏感信息、越权调用、幻觉和不可逆操作比例。</li>
-                  <li><b>闭环：</b>将线上失败案例按根因归类，回流到测试集，用于Prompt、知识、工具和模型迭代。</li>
-                </ol>
-                <p>评测不能只有一个总分；不同场景的错误成本不同，高风险任务必须设置单独门槛和人工确认。</p>
-              </div>
-            </details>
-
-            <details class="qa">
-              <summary><span class="q-number">24</span><span>如何降低大模型幻觉，并建立用户信任？</span></summary>
-              <div class="answer">
-                <ul>
-                  <li><b>减少未知：</b>通过RAG、结构化数据和受控工具提供可靠上下文，并明确知识时效和来源。</li>
-                  <li><b>限制输出：</b>用任务拆解、结构化格式、规则校验和确定性计算避免模型自由发挥。</li>
-                  <li><b>验证结果：</b>对关键事实进行检索交叉验证，对代码、数据和操作结果使用执行器或规则检测。</li>
-                  <li><b>按风险分级：</b>低风险内容允许直接生成；高风险决策展示依据、置信提示并要求用户确认。</li>
-                  <li><b>允许纠错：</b>保留过程日志、来源引用、撤销和反馈入口，让错误可发现、可追溯、可恢复。</li>
-                </ul>
-                <p>产品目标不是承诺“零幻觉”，而是让幻觉发生概率、影响范围和恢复成本都可被管理。</p>
-              </div>
-            </details>
-
-            <details class="qa">
-              <summary><span class="q-number">25</span><span>Prompt、RAG、微调和工具调用分别适合解决什么问题？</span></summary>
-              <div class="answer">
-                <ul>
-                  <li><b>Prompt：</b>适合明确角色、任务步骤、输出格式和少量示例，是成本最低、迭代最快的起点。</li>
-                  <li><b>RAG：</b>适合需要最新、私域或可追溯知识的任务，重点在检索质量、权限、切片和上下文组织。</li>
-                  <li><b>微调：</b>适合稳定、高频且有高质量样本的行为或风格问题，不适合用来记忆频繁变化的事实。</li>
-                  <li><b>工具调用：</b>适合查询实时数据、执行确定性计算或操作外部系统，让模型从“回答”走向“完成任务”。</li>
-                </ul>
-                <p>选择顺序通常是先用Prompt验证任务，再补知识与工具；只有问题稳定、数据充分且收益明确时才考虑微调。</p>
-              </div>
-            </details>
-
-            <details class="qa">
-              <summary><span class="q-number">26</span><span>你如何在AI效果、响应速度和成本之间做取舍？</span></summary>
-              <div class="answer">
-                <p><b>推荐案例：QQ运动千万级用户AI个性化。</b></p>
-                <ul>
-                  <li>先按用户价值、场景时效性和任务复杂度分层，而不是所有请求都使用最强模型实时生成。</li>
-                  <li>对小范围、高价值、强时效场景采用实时生成；对规模化、低时效场景采用离线批量生成与缓存。</li>
-                  <li>通过模型路由、Prompt压缩、上下文裁剪、结果复用和失败升级降低无效消耗。</li>
-                  <li>离线侧重点是万级内容生产、状态映射和文本校验；实时侧重点是延迟、超时、降级与兜底。</li>
-                  <li>最终同时观察内容效果、响应时间、任务成功率和单位用户成本，避免单独追求某一个指标。</li>
+                  <li><b>用户问题：</b>用户看到数据后，不一定知道自己的表现如何、下一步应该做什么，产品缺少反馈感和陪伴感。</li>
+                  <li><b>产品目标：</b>把“数据展示工具”升级为“理解用户状态并给出反馈与行动建议的运动助手”。</li>
+                  <li><b>方案拆分：</b>首页与插件页采用离线生成，解决大规模日常提醒；完整运动结束后采用实时生成，提供针对本次运动的评价。</li>
+                  <li><b>核心取舍：</b>AI不是为了增加一个聊天入口，而是嵌入用户看步数、看运动记录和完成运动后的关键节点。</li>
                 </ul>
               </div>
             </details>
 
             <details class="qa">
-              <summary><span class="q-number">27</span><span>如果让你设计Agent的记忆体系，你会怎么做？</span></summary>
+              <summary><span class="q-number">23</span><span>为什么QQ运动同时采用离线生成和实时生成两种方案？</span></summary>
               <div class="answer">
+                <p><b>核心原因：</b>两个场景对时效性和个性化深度的要求不同，不能用一种生成方式覆盖全部用户。</p>
                 <ul>
-                  <li><b>工作记忆：</b>保存当前任务目标、计划、工具结果和未完成状态，服务一次任务闭环。</li>
-                  <li><b>短期记忆：</b>保存近期会话和阶段性上下文，通过摘要、裁剪和重要性判断控制Token。</li>
-                  <li><b>长期记忆：</b>只沉淀稳定偏好、用户确认事实和可复用资产，并支持来源、更新时间和置信度。</li>
-                  <li><b>组织知识：</b>与个人记忆分离，按角色和空间做权限控制，避免企业数据越权或相互污染。</li>
-                  <li><b>治理：</b>提供查看、修改、删除、过期和不记忆机制；敏感信息默认不自动沉淀。</li>
-                </ul>
-                <p>记忆不是保存得越多越好，关键是需要时能准确召回、不需要时不干扰，并且让用户拥有控制权。</p>
-              </div>
-            </details>
-
-            <details class="qa">
-              <summary><span class="q-number">28</span><span>如何设计Agent的工具调用与MCP能力？</span></summary>
-              <div class="answer">
-                <ul>
-                  <li><b>能力描述：</b>工具名称、用途、参数、返回值和适用边界必须清晰，减少模型误选和错误填参。</li>
-                  <li><b>权限体系：</b>区分读取、写入和高风险操作，采用最小权限、Scope控制、短期凭证和用户授权。</li>
-                  <li><b>执行机制：</b>设置参数校验、超时、重试、幂等、限流和错误码，让失败能够被Agent理解并恢复。</li>
-                  <li><b>安全交互：</b>发送消息、支付、删除等不可逆操作必须预览并二次确认，同时保留审计日志。</li>
-                  <li><b>效果评估：</b>监控工具选择准确率、调用成功率、端到端任务成功率、平均调用次数和失败根因。</li>
-                </ul>
-                <p>MCP解决的是工具接入标准化问题，但产品仍要设计发现、授权、编排、失败恢复和责任边界。</p>
-              </div>
-            </details>
-
-            <details class="qa">
-              <summary><span class="q-number">29</span><span>什么情况下需要多智能体？如何避免系统变得更复杂？</span></summary>
-              <div class="answer">
-                <p><b>判断原则：</b>只有当任务存在明确角色分工、并行价值或专业上下文隔离时，多智能体才可能优于单Agent加工具。</p>
-                <ul>
-                  <li>将复杂目标拆成计划、执行、检查等可验证子任务，为每个Agent定义输入、输出和完成标准。</li>
-                  <li>由统一编排层管理任务状态、依赖、上下文和冲突，避免Agent之间无限对话。</li>
-                  <li>能并行的任务并行，强依赖任务串行；设置最大轮次、预算和超时，防止成本失控。</li>
-                  <li>关键中间产物采用结构化协议传递，并对最终结果进行独立校验或人工确认。</li>
-                  <li>通过消融实验比较单Agent与多Agent的成功率、耗时和成本，证明复杂度确实有收益。</li>
+                  <li><b>离线场景：</b>首页和插件页面向千万级用户，每次打开都实时调用模型，成本、并发和时延都不可控。</li>
+                  <li><b>离线方案：</b>按用户状态、时间和业务规则提前批量生成文案桶，访问时通过规则命中、打分、频控和兜底完成展示。</li>
+                  <li><b>实时场景：</b>跑步、羽毛球等完整运动结束后，数据组合差异大，用户又期待即时反馈，固定模板难以覆盖。</li>
+                  <li><b>实时方案：</b>将本次运动、近30天同类运动及个人里程碑输入模型，一次性生成本次评价并永久缓存。</li>
+                  <li><b>产品判断：</b>把最昂贵的实时能力用在用户感知最强的节点，把高频流量交给离线体系承接。</li>
                 </ul>
               </div>
             </details>
 
             <details class="qa">
-              <summary><span class="q-number">30</span><span>如何让AI产品形成持续优化的数据飞轮？</span></summary>
+              <summary><span class="q-number">24</span><span>QQ运动的离线AI提醒具体是如何设计的？</span></summary>
               <div class="answer">
-                <ol>
-                  <li><b>定义成功：</b>记录任务目标、输入条件、模型与工具版本、过程轨迹和最终结果。</li>
-                  <li><b>收集信号：</b>结合显式评价与隐式行为，例如采纳、修改、重试、撤销、人工接管和后续留存。</li>
-                  <li><b>失败归因：</b>区分需求理解、知识缺失、检索、规划、工具、模型输出和产品交互问题。</li>
-                  <li><b>回流改进：</b>将高价值失败案例沉淀到评测集，分别推动Prompt、RAG、工具、模型和流程优化。</li>
-                  <li><b>灰度验证：</b>离线评测通过后再进行线上A/B测试，并监控效果、体验、成本与风险护栏。</li>
-                </ol>
-                <p>数据飞轮不是简单收集更多对话，而是把“结果—根因—改进—验证”形成可重复的产品机制。</p>
+                <p>我把离线提醒拆成“候选生成—规则匹配—排序上屏—频控兜底”四个环节。</p>
+                <ul>
+                  <li><b>内容分层：</b>包括今日运动、功能引导、健康习惯和健康Tips，分别承接数据反馈、功能转化和习惯培养。</li>
+                  <li><b>生成机制：</b>根据触发条件、写作指引和写作规范批量预生成内容桶，而不是用户访问时实时生成。</li>
+                  <li><b>状态判断：</b>综合今日步数、历史数据、目标完成、排行榜、好友互动、穿戴设备、习惯打卡和时间段等信号。</li>
+                  <li><b>展示决策：</b>各类候选并行命中后进行优先级和打分，输出3至4条，并限制同类内容数量。</li>
+                  <li><b>运营能力：</b>触发条件、CTA、阈值、文案桶和批次均可配置，支持小流量灰度、单条下线和整批回滚。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">25</span><span>运动结束后的实时AI点评是怎样生成的？</span></summary>
+              <div class="answer">
+                <ul>
+                  <li><b>触发时机：</b>一次完整运动结束并入库后触发，每次运动只生成一条，用户重复查看直接读取缓存。</li>
+                  <li><b>本次数据：</b>输入运动类型、时长、卡路里、强度及跑步配速、步频等运动专项字段。</li>
+                  <li><b>历史参照：</b>输入近30天同项运动明细、平均表现、运动频次和累计数据。</li>
+                  <li><b>里程碑：</b>后台提前计算PB、连续运动天数及本月累计次数，模型不负责重复计算。</li>
+                  <li><b>文案策略：</b>模型根据数据选择庆祝、肯定、鼓励、共情或中性风格，只与用户自己的历史数据比较。</li>
+                  <li><b>缓存策略：</b>生成后长期保存，避免同一条运动反复调用产生内容变化和额外成本。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">26</span><span>你如何保证AI生成的运动内容准确、安全且不冒犯用户？</span></summary>
+              <div class="answer">
+                <p><b>核心方法：</b>不是只优化Prompt，而是将输入、生成规范、自动校验和降级机制一起设计。</p>
+                <ul>
+                  <li><b>输入约束：</b>需要引用的数值由后台计算并结构化传入，模型不得自行计算或使用未提供字段。</li>
+                  <li><b>绿线规则：</b>必须引用真实运动数据，文案与运动类型一致，PB和连续天数只有命中标记时才能出现。</li>
+                  <li><b>红线规则：</b>禁止医疗建议、外貌评价、隐私推断、负面标签、命令式表达和与其他用户比较。</li>
+                  <li><b>异常过滤：</b>运动不足1分钟或距离、配速、卡路里明显异常时，不生成AI点评。</li>
+                  <li><b>频控去重：</b>离线提醒控制同一内容24小时不重复、同一用户7天内文案不重复，降低打扰感。</li>
+                  <li><b>灰度回滚：</b>内容批次按小流量逐步放量，出现红线、投诉或异常可单条下架、整批回滚和一键熔断。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">27</span><span>如果大模型生成失败或超时，QQ运动如何保证用户体验？</span></summary>
+              <div class="answer">
+                <p>实时点评设计了明确的降级链，不能让AI故障影响运动主流程。</p>
+                <ul>
+                  <li><b>第一级：</b>模型正常生成并通过规则校验，展示完整个性化点评。</li>
+                  <li><b>第二级：</b>模型超时、失败或违规时，使用编码规则把运动类型、时长、距离、配速等真实数据拼成确定性文案。</li>
+                  <li><b>第三级：</b>若基础字段也不足，则隐藏AI点评，只展示原始运动数据，不阻断用户查看记录。</li>
+                  <li><b>内容稳定：</b>同一次运动只生成一次并缓存，避免用户每次打开看到不同评价。</li>
+                  <li><b>监控熔断：</b>监控延迟、超时率、错误率和各级降级比例，异常时可以快速切换或关闭AI模块。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">28</span><span>QQ运动AI项目中最难的产品问题是什么？</span></summary>
+              <div class="answer">
+                <ul>
+                  <li><b>规模问题：</b>面对日活1000万用户，不能把“千人千面”等同于每次请求都实时调用模型。</li>
+                  <li><b>状态复杂：</b>步数、目标、排行、好友互动、穿戴数据、习惯、天气和时间段会形成大量组合，需要先做状态抽象。</li>
+                  <li><b>内容治理：</b>运动和健康内容既要个性化，又不能给出医疗建议、负向评价或编造数据。</li>
+                  <li><b>确定性与生成式平衡：</b>触发、排序、频控和数值计算交给规则；语言表达和风格变化交给模型。</li>
+                  <li><b>可运营性：</b>不能把每次调整都变成研发需求，因此需要把阈值、规则、文案桶、批次和回滚能力平台化。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">29</span><span>你准备如何判断QQ运动AI升级是否有效？</span></summary>
+              <div class="answer">
+                <p>项目效果需要同时看用户价值、内容质量、业务转化和系统成本，目前具体上线结果仍需在项目落地后补充。</p>
+                <ul>
+                  <li><b>用户使用：</b>AI区域曝光、展开、点赞或点踩，以及用户是否继续进入运动详情。</li>
+                  <li><b>行动转化：</b>提醒内容的点击率，以及捐步、点赞、目标设置、习惯打卡等后续完成率。</li>
+                  <li><b>内容质量：</b>红线命中、占位符错误、重复率、投诉率、人工抽检通过率和负反馈原因。</li>
+                  <li><b>系统质量：</b>模型P95延迟、超时率、错误率、缓存命中率和降级链分布。</li>
+                  <li><b>成本指标：</b>每日模型成本、用户均成本，以及实时与离线方案各自的投入产出。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="qa">
+              <summary><span class="q-number">30</span><span>你在QQ运动AI升级中具体承担了什么角色？</span></summary>
+              <div class="answer">
+                <p><b>建议按你的真实分工回答，避免把团队共同产出全部归为个人：</b></p>
+                <ul>
+                  <li>负责QQ运动AI化升级的产品方案，将整体需求拆分为离线提醒与实时运动点评两条链路。</li>
+                  <li>设计离线侧的内容分类、触发条件、状态规则、候选排序、频控、兜底和后台配置能力。</li>
+                  <li>设计实时侧的生成时机、数据入参、历史对比、风格判断、输出红线、缓存和降级链。</li>
+                  <li>推动研发、设计、测试和运营对齐产品方案，并明确埋点、灰度、回滚及异常处理要求。</li>
+                  <li>当前可重点证明的是产品判断和方案设计；上线数据、个人独立贡献比例及实际研发协作细节需要继续补齐。</li>
+                </ul>
               </div>
             </details>
           </div>
@@ -2304,6 +2303,21 @@
           localStorage.setItem(storageKey, main.innerHTML);
         }
         localStorage.setItem(aiQaMigrationKey, "done");
+      }
+
+      // Replace the AI topic set with QQ Sports project-based answers once.
+      const projectAiQaMigrationKey = "workbuddy-project-ai-qa-migration-v14";
+      if (savedContent && !localStorage.getItem(projectAiQaMigrationKey)) {
+        const originalTemplate = document.createElement("template");
+        originalTemplate.innerHTML = originalContent;
+        const latestQuestions = [...originalTemplate.content.querySelectorAll("#interview .qa-list > .qa")];
+        const savedQuestions = [...main.querySelectorAll("#interview .qa-list > .qa")];
+        latestQuestions.slice(21, 30).forEach((question, index) => {
+          const savedQuestion = savedQuestions[index + 21];
+          if (savedQuestion) savedQuestion.replaceWith(question.cloneNode(true));
+        });
+        localStorage.setItem(storageKey, main.innerHTML);
+        localStorage.setItem(projectAiQaMigrationKey, "done");
       }
 
       // Keep structural upgrades even when the user has older locally saved edits.

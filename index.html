@@ -377,6 +377,46 @@
       color: #172236;
     }
 
+    .resume-page:first-child .resume-section {
+      margin-top: 8px;
+    }
+
+    .resume-page:first-child .resume-section-title {
+      margin-bottom: 5px;
+      font-size: 12.3pt;
+    }
+
+    .resume-page:first-child .summary-box {
+      padding: 7px 10px;
+      font-size: 9.4pt;
+      line-height: 1.62;
+    }
+
+    .resume-page:first-child .skill {
+      padding: 5px 7px;
+      font-size: 8.6pt;
+      line-height: 1.45;
+    }
+
+    .resume-page:first-child .job {
+      padding: 6px 0 7px;
+    }
+
+    .resume-page:first-child .project-label {
+      margin: 5px 0 1px;
+      font-size: 9pt;
+    }
+
+    .resume-page:first-child .resume-list {
+      margin-top: 3px;
+      font-size: 9pt;
+      line-height: 1.5;
+    }
+
+    .resume-page:first-child .resume-list li {
+      margin: 1px 0;
+    }
+
     .metric {
       color: var(--navy);
       font-weight: 850;
@@ -1114,6 +1154,10 @@
                   系统解决实名主体、用户授权、资金安全、风险处置及责任边界等核心问题。</li>
                 <li><b>重构QQ核心场景的支付能力：</b>推动红包、转账、收款、代付款等场景全面支持微信支付，贯通支付受理、
                   结果回传、异常补偿等链路，并融合微信支付风控、反洗钱能力，形成安全、稳定、可规模化复用的跨端支付方案。</li>
+                <li><b>打通QQ余额与微信零钱账户体系：</b>推动QQ余额转入微信零钱从0到1落地，构建微信授权、支付验密、
+                  同名实名核验、账户管控、资金划转、双端消息及账单的完整闭环，实现两大支付账户体系间的合规资金流转。</li>
+                <li><b>实现显著用户与业务价值：</b>功能上线后获得广泛社会关注，登上微博、脉脉等平台热搜；内部监控显示，
+                  QQ余额转入微信的日均金额达到<span class="metric">数千万元量级</span>。</li>
               </ul>
 
             </article>
@@ -1123,14 +1167,6 @@
 
         <article class="resume-page">
           <section class="resume-section" style="margin-top:0">
-            <span class="project-label">QQ×微信支付生态互通｜跨端支付基础设施建设（续）</span>
-            <ul class="resume-list">
-              <li><b>打通QQ余额与微信零钱账户体系：</b>推动QQ余额转入微信零钱从0到1落地，构建微信授权、支付验密、
-                同名实名核验、账户管控、资金划转、双端消息及账单的完整闭环，实现两大支付账户体系间的合规资金流转。</li>
-              <li><b>实现显著用户与业务价值：</b>功能上线后获得广泛社会关注，登上微博、脉脉等平台热搜；内部监控显示，
-                QQ余额转入微信的日均金额达到<span class="metric">数千万元量级</span>。</li>
-            </ul>
-
             <span class="project-label">QQ消费金融借贷服务平台｜平台化转型与0到1建设</span>
             <ul class="resume-list">
               <li><b>主导业务平台化转型：</b>推动QQ消费金融从广告导流模式升级为一站式借贷服务平台，
@@ -2438,6 +2474,33 @@
           .forEach((title) => title.remove());
         persistDraft(main.innerHTML);
         localStorage.setItem(resumeContinuationHeadingMigrationKey, "done");
+      }
+
+      // Keep the payment project together on page one and normalize the consumer-finance title style.
+      const resumePageBalanceMigrationKey = "workbuddy-resume-page-balance-migration-v19";
+      if (savedContent && !localStorage.getItem(resumePageBalanceMigrationKey)) {
+        const resumePages = [...main.querySelectorAll("#resume .resume-page")];
+        const firstPage = resumePages[0];
+        const secondPage = resumePages[1];
+        const firstPaymentLabel = [...(firstPage?.querySelectorAll(".project-label") || [])]
+          .find((label) => label.textContent.includes("QQ×微信支付生态互通"));
+        const firstPaymentList = firstPaymentLabel?.nextElementSibling;
+        const continuationLabel = [...(secondPage?.querySelectorAll(".project-label") || [])]
+          .find((label) => label.textContent.includes("QQ×微信支付生态互通"));
+        const continuationList = continuationLabel?.nextElementSibling;
+        if (firstPaymentList?.matches("ul") && continuationList?.matches("ul")) {
+          [...continuationList.children].forEach((item) => firstPaymentList.append(item));
+          continuationList.remove();
+          continuationLabel.remove();
+        }
+        [...(secondPage?.querySelectorAll(".resume-section-title") || [])]
+          .filter((title) => title.textContent.includes("QQ消费金融借贷服务平台"))
+          .forEach((title) => {
+            title.classList.remove("resume-section-title");
+            title.classList.add("project-label");
+          });
+        persistDraft(main.innerHTML);
+        localStorage.setItem(resumePageBalanceMigrationKey, "done");
       }
 
       saveState.textContent = savedContent ? "已恢复本机保存" : "未修改";

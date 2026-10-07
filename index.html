@@ -2222,7 +2222,8 @@
 
   <script>
     (() => {
-      const storageKey = "workbuddy-job-kit-editable-v10";
+      const storageKey = "workbuddy-job-kit-editable-v15";
+      const legacyStorageKey = "workbuddy-job-kit-editable-v10";
       const main = document.querySelector("main");
       const originalContent = main.innerHTML;
       const buttons = [...document.querySelectorAll("[data-target]")];
@@ -2236,7 +2237,55 @@
       let editing = false;
       let saveTimer;
 
-      const savedContent = localStorage.getItem(storageKey);
+      function parseDraft(raw) {
+        if (!raw) return null;
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed.content === "string") return parsed;
+        } catch (error) {
+          return { content: raw, updatedAt: 0 };
+        }
+        return null;
+      }
+
+      function readStorage(store, key) {
+        try {
+          return parseDraft(store.getItem(key));
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function latestDraft() {
+        const candidates = [
+          readStorage(localStorage, storageKey),
+          readStorage(sessionStorage, storageKey),
+          readStorage(localStorage, legacyStorageKey)
+        ].filter(Boolean);
+        return candidates.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0))[0] || null;
+      }
+
+      function persistDraft(content) {
+        const payload = JSON.stringify({ content, updatedAt: Date.now() });
+        let localSaved = false;
+        let sessionSaved = false;
+        try {
+          localStorage.setItem(storageKey, payload);
+          localSaved = localStorage.getItem(storageKey) === payload;
+        } catch (error) {
+          localSaved = false;
+        }
+        try {
+          sessionStorage.setItem(storageKey, payload);
+          sessionSaved = sessionStorage.getItem(storageKey) === payload;
+        } catch (error) {
+          sessionSaved = false;
+        }
+        return localSaved || sessionSaved;
+      }
+
+      const savedDraft = latestDraft();
+      const savedContent = savedDraft?.content || null;
       if (savedContent) main.innerHTML = savedContent;
 
       // Migrate the interview introduction once without discarding other saved edits.
@@ -2248,7 +2297,7 @@
         const savedIntro = main.querySelector("#interview .qa-list .qa:first-child");
         if (latestIntro && savedIntro) {
           savedIntro.replaceWith(latestIntro.cloneNode(true));
-          localStorage.setItem(storageKey, main.innerHTML);
+          persistDraft(main.innerHTML);
         }
         localStorage.setItem(introMigrationKey, "done");
       }
@@ -2275,7 +2324,7 @@
             const savedQuestion = savedQuestions[index + 1];
             if (savedQuestion) savedQuestion.replaceWith(question.cloneNode(true));
           });
-          localStorage.setItem(storageKey, main.innerHTML);
+          persistDraft(main.innerHTML);
         }
         localStorage.setItem(qaMigrationKey, "done");
       }
@@ -2300,7 +2349,7 @@
             const number = question.querySelector(".q-number")?.textContent.trim();
             if (savedList && number && !savedNumbers.has(number)) savedList.append(question.cloneNode(true));
           });
-          localStorage.setItem(storageKey, main.innerHTML);
+          persistDraft(main.innerHTML);
         }
         localStorage.setItem(aiQaMigrationKey, "done");
       }
@@ -2316,9 +2365,11 @@
           const savedQuestion = savedQuestions[index + 21];
           if (savedQuestion) savedQuestion.replaceWith(question.cloneNode(true));
         });
-        localStorage.setItem(storageKey, main.innerHTML);
+        persistDraft(main.innerHTML);
         localStorage.setItem(projectAiQaMigrationKey, "done");
       }
+
+      saveState.textContent = savedContent ? "已恢复本机保存" : "未修改";
 
       // Keep structural upgrades even when the user has older locally saved edits.
       [...main.querySelectorAll(".resume-section-title")]
@@ -2352,9 +2403,13 @@
 
       function saveContent(showFeedback = true) {
         currentViews().forEach((view) => view.removeAttribute("contenteditable"));
-        localStorage.setItem(storageKey, main.innerHTML);
+        const saved = persistDraft(main.innerHTML);
         if (editing) currentViews().forEach((view) => view.contentEditable = "true");
-        if (showFeedback) saveState.textContent = "已保存";
+        if (showFeedback) {
+          const time = new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", hour12: false });
+          saveState.textContent = saved ? `已保存 ${time}` : "保存失败，请导出新版备份";
+        }
+        return saved;
       }
 
       function scheduleSave() {
@@ -2392,6 +2447,10 @@
         if (editing) scheduleSave();
       });
 
+      window.addEventListener("pagehide", () => {
+        if (editing) saveContent(false);
+      });
+
       exportButton.addEventListener("click", () => {
         saveContent(false);
         const clone = document.documentElement.cloneNode(true);
@@ -2410,7 +2469,14 @@
 
       resetButton.addEventListener("click", () => {
         if (!window.confirm("确定恢复最初版本吗？当前在本机保存的修改将被清除。")) return;
-        localStorage.removeItem(storageKey);
+        try {
+          localStorage.removeItem(storageKey);
+          localStorage.removeItem(legacyStorageKey);
+          sessionStorage.removeItem(storageKey);
+        } catch (error) {
+          saveState.textContent = "清除失败，请关闭页面后重试";
+          return;
+        }
         main.innerHTML = originalContent;
         location.reload();
       });

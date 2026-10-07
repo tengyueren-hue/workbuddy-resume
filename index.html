@@ -1123,7 +1123,6 @@
 
         <article class="resume-page">
           <section class="resume-section" style="margin-top:0">
-            <h2 class="resume-section-title">腾讯经历（续）</h2>
             <span class="project-label">QQ×微信支付生态互通｜跨端支付基础设施建设（续）</span>
             <ul class="resume-list">
               <li><b>打通QQ余额与微信零钱账户体系：</b>推动QQ余额转入微信零钱从0到1落地，构建微信授权、支付验密、
@@ -2429,6 +2428,16 @@
           persistDraft(main.innerHTML);
         }
         localStorage.setItem(resumeLayoutMigrationKey, "done");
+      }
+
+      // Remove the redundant second-page Tencent experience heading once.
+      const resumeContinuationHeadingMigrationKey = "workbuddy-resume-continuation-heading-migration-v18";
+      if (savedContent && !localStorage.getItem(resumeContinuationHeadingMigrationKey)) {
+        [...main.querySelectorAll("#resume .resume-section-title")]
+          .filter((title) => title.textContent.trim() === "腾讯经历（续）")
+          .forEach((title) => title.remove());
+        persistDraft(main.innerHTML);
+        localStorage.setItem(resumeContinuationHeadingMigrationKey, "done");
       }
 
       saveState.textContent = savedContent ? "已恢复本机保存" : "未修改";

@@ -2318,24 +2318,28 @@
       const savedContent = savedDraft?.content || null;
       if (savedContent) main.innerHTML = savedContent;
 
-      // One-time repair for browsers that still hold the old two-page resume layout.
-      // Preserve every other module and replace only the resume with the verified source.
-      const stableResumeMigrationKey = "workbuddy-stable-resume-migration-v19";
+      // One-time repair for browsers that still hold an older or malformed resume DOM.
+      // Rebuild the page skeleton, keep the four non-resume modules, and discard stray
+      // resume fragments that older pagination scripts left outside the resume view.
+      const stableResumeMigrationKey = "workbuddy-stable-resume-migration-v20";
       if (savedContent && !localStorage.getItem(stableResumeMigrationKey)) {
         const sourceTemplate = document.createElement("template");
         sourceTemplate.innerHTML = originalContent;
-        const latestResume = sourceTemplate.content.querySelector("#resume");
-        const savedResume = main.querySelector("#resume");
-        if (latestResume && savedResume) {
+        ["projects", "match", "interview", "gaps"].forEach((id) => {
+          const latestView = sourceTemplate.content.querySelector(`#${id}`);
+          const savedView = main.querySelector(`#${id}`);
+          if (latestView && savedView) latestView.replaceWith(savedView.cloneNode(true));
+        });
+        if (sourceTemplate.content.querySelector("#resume")) {
           try {
             localStorage.setItem(
-              "workbuddy-resume-before-stable-migration-v19",
-              JSON.stringify({ content: savedResume.outerHTML, updatedAt: Date.now() })
+              "workbuddy-main-before-stable-migration-v20",
+              JSON.stringify({ content: main.innerHTML, updatedAt: Date.now() })
             );
           } catch (error) {
             // Backup is best-effort and must not block the visible repair.
           }
-          savedResume.replaceWith(latestResume.cloneNode(true));
+          main.innerHTML = sourceTemplate.innerHTML;
           if (persistDraft(main.innerHTML)) {
             localStorage.setItem(stableResumeMigrationKey, "done");
           }

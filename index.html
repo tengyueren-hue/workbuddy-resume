@@ -2318,6 +2318,30 @@
       const savedContent = savedDraft?.content || null;
       if (savedContent) main.innerHTML = savedContent;
 
+      // One-time repair for browsers that still hold the old two-page resume layout.
+      // Preserve every other module and replace only the resume with the verified source.
+      const stableResumeMigrationKey = "workbuddy-stable-resume-migration-v19";
+      if (savedContent && !localStorage.getItem(stableResumeMigrationKey)) {
+        const sourceTemplate = document.createElement("template");
+        sourceTemplate.innerHTML = originalContent;
+        const latestResume = sourceTemplate.content.querySelector("#resume");
+        const savedResume = main.querySelector("#resume");
+        if (latestResume && savedResume) {
+          try {
+            localStorage.setItem(
+              "workbuddy-resume-before-stable-migration-v19",
+              JSON.stringify({ content: savedResume.outerHTML, updatedAt: Date.now() })
+            );
+          } catch (error) {
+            // Backup is best-effort and must not block the visible repair.
+          }
+          savedResume.replaceWith(latestResume.cloneNode(true));
+          if (persistDraft(main.innerHTML)) {
+            localStorage.setItem(stableResumeMigrationKey, "done");
+          }
+        }
+      }
+
       // Migrate the interview introduction once without discarding other saved edits.
       const introMigrationKey = "workbuddy-intro-migration-v11";
       if (savedContent && !localStorage.getItem(introMigrationKey)) {

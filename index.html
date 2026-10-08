@@ -217,18 +217,6 @@
       box-shadow: var(--shadow);
     }
 
-    .resume-stack.resume-paginating {
-      width: 210mm !important;
-    }
-
-    .resume-stack.resume-paginating .resume-page {
-      width: 210mm !important;
-      height: 297mm !important;
-      min-height: 297mm !important;
-      padding: 11mm 14mm !important;
-      overflow: hidden !important;
-    }
-
     .resume-header {
       display: grid;
       grid-template-columns: 1fr;
@@ -1132,13 +1120,6 @@
                 <li><b>取得阶段性商业结果：</b>已形成覆盖多个QQ核心场景的激励广告矩阵，目前日收入约5万元，并持续拓展兼顾体验与变现的新场景。</li>
               </ul>
 
-            </article>
-          </section>
-        </article>
-
-        <article class="resume-page">
-          <section class="resume-section resume-continuation" aria-label="腾讯经历续页">
-
               <h4 class="project-label">QQ×微信支付生态互通｜跨端支付基础设施建设</h4>
               <ul class="resume-list payment-list">
                 <li><b>主导两大支付生态的系统级互通：</b>牵引QQ、微信支付、微信开放平台、FIT及法务、风控等多方，
@@ -1146,11 +1127,20 @@
                   系统解决实名主体、用户授权、资金安全、风险处置及责任边界等核心问题。</li>
                 <li><b>重构QQ核心场景的支付能力：</b>推动红包、转账、收款、代付款等场景全面支持微信支付，贯通支付受理、
                   结果回传、异常补偿等链路，并融合微信支付风控、反洗钱能力，形成安全、稳定、可规模化复用的跨端支付方案。</li>
+              </ul>
+
+            </article>
+          </section>
+        </article>
+
+        <article class="resume-page">
+          <section class="resume-section resume-continuation" aria-label="腾讯经历续页">
+              <ul class="resume-list payment-list payment-list-continuation">
                 <li><b>打通QQ余额与微信零钱账户体系：</b>推动QQ余额转入微信零钱从0到1落地，构建微信授权、支付验密、
                   同名实名核验、账户管控、资金划转、双端消息及账单的完整闭环，实现两大支付账户体系间的合规资金流转。</li>
-              <li><b>实现显著用户与业务价值：</b>功能上线后获得广泛社会关注，登上微博、脉脉等平台热搜；内部监控显示，
-                QQ余额转入微信的日均金额达到<span class="metric">数千万元量级</span>。</li>
-            </ul>
+                <li><b>实现显著用户与业务价值：</b>功能上线后获得广泛社会关注，登上微博、脉脉等平台热搜；内部监控显示，
+                  QQ余额转入微信的日均金额达到<span class="metric">数千万元量级</span>。</li>
+              </ul>
 
             <h4 class="project-label">QQ消费金融借贷服务平台｜平台化转型与0到1建设</h4>
             <ul class="resume-list">
@@ -2430,73 +2420,29 @@
         localStorage.setItem(performanceMigrationKey, "done");
       }
 
-      // Paginate in document order, measuring the same A4 geometry on every screen.
-      function paginateResume() {
+      // Keep the resume on two explicit A4 pages. Automatic measurement-based pagination
+      // produced different page counts across browsers, so the split is now semantic and stable.
+      function stabilizeResumeLayout() {
         const resume = main.querySelector("#resume");
         const stack = resume?.querySelector(".resume-stack");
-        if (!stack || !resume.classList.contains("active")) return;
-        stack.style.removeProperty("zoom");
-        const units = [];
-        const hidden = [];
-        const atomic = ".resume-header, .resume-section-title, .summary-box, .skill-grid, .job-head, .project-label, li, .mini-job, .project-card, .education-row, .footnote";
-        function collect(node, ancestors = []) {
-          if (node.hidden) { hidden.push(node); return; }
-          if (node.matches(atomic) || !node.children.length) {
-            if (node.textContent.trim()) units.push({ node, ancestors });
-            return;
-          }
-          [...node.children].forEach(child => collect(child, [...ancestors, node]));
-        }
-        [...stack.children].forEach(page => [...page.children].forEach(node => collect(node)));
-        stack.replaceChildren();
-        let page, copies;
-        function newPage() {
-          page = document.createElement("article");
-          page.className = "resume-page";
-          stack.append(page);
-          copies = new Map();
-        }
-        function appendUnit(unit) {
-          let parent = page;
-          unit.ancestors.forEach(source => {
-            if (!copies.has(source)) {
-              const copy = source.cloneNode(false);
-              copy.removeAttribute("id");
-              copy.removeAttribute("style");
-              parent.append(copy);
-              copies.set(source, copy);
+        if (!stack) return;
+        const pages = [...stack.querySelectorAll(":scope > .resume-page")];
+
+        // A previously saved draft may contain the transient 3-page DOM created by the old
+        // paginator. Preserve a local backup, then restore only the resume from the current source.
+        if (pages.length !== 2) {
+          if (savedContent) {
+            try {
+              localStorage.setItem("workbuddy-resume-layout-backup-v18", savedContent);
+            } catch (error) {
+              // The backup is best-effort; failure must not leave the resume broken.
             }
-            parent = copies.get(source);
-          });
-          parent.append(unit.node);
-        }
-        function fits() {
-          const bottom = page.getBoundingClientRect().bottom - parseFloat(getComputedStyle(page).paddingBottom);
-          return [...page.querySelectorAll(atomic)].every(node => node.getBoundingClientRect().bottom <= bottom + 0.5);
-        }
-        function prune() {
-          [...page.querySelectorAll("section, article, ul, div")].reverse().forEach(node => {
-            if (!node.textContent.trim()) node.remove();
-          });
-        }
-        newPage();
-        let pending = [];
-        for (const unit of units) {
-          pending.push(unit);
-          if (unit.node.matches(".resume-section-title, .job-head, .project-label")) continue;
-          const hadContent = page.textContent.trim().length > 0;
-          pending.forEach(appendUnit);
-          if (!fits() && hadContent) {
-            pending.forEach(item => item.node.remove());
-            prune();
-            newPage();
-            pending.forEach(appendUnit);
           }
-          pending = [];
+          const template = document.createElement("template");
+          template.innerHTML = originalContent;
+          const stableResume = template.content.querySelector("#resume");
+          if (stableResume) resume.replaceWith(stableResume.cloneNode(true));
         }
-        pending.forEach(appendUnit);
-        hidden.forEach(node => stack.firstElementChild.append(node));
-        fitResumeToScreen();
       }
 
       function fitResumeToScreen() {
@@ -2564,7 +2510,7 @@
           button.setAttribute("aria-current", active ? "page" : "false");
         });
         if (updateHash) history.replaceState(null, "", `#${targetId}`);
-        if (targetId === "resume") paginateResume();
+        if (targetId === "resume") fitResumeToScreen();
         window.scrollTo({ top: 0, behavior: "instant" });
       }
 
@@ -2577,7 +2523,7 @@
       editButton.addEventListener("click", () => {
         if (editing) saveContent();
         setEditable(!editing);
-        if (!editing) paginateResume();
+        if (!editing) fitResumeToScreen();
       });
 
       saveButton.addEventListener("click", () => saveContent());
@@ -2638,11 +2584,11 @@
       bindSearch("projectSearch", "projectList");
       bindSearch("qaSearch", "qaList");
 
+      stabilizeResumeLayout();
       const initial = location.hash.replace("#", "");
       activate(initial || "resume", false);
-      document.fonts.ready.then(() => paginateResume());
+      document.fonts.ready.then(() => fitResumeToScreen());
       window.addEventListener("resize", fitResumeToScreen);
-      window.addEventListener("beforeprint", paginateResume);
       window.addEventListener("afterprint", fitResumeToScreen);
     })();
   </script>

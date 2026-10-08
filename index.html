@@ -54,7 +54,7 @@
     }
 
     .topbar {
-      position: sticky;
+      position: relative;
       top: 0;
       z-index: 10;
       display: flex;
@@ -198,7 +198,8 @@
     }
 
     .resume-stack {
-      display: grid;
+      display: flex;
+      flex-direction: column;
       width: 210mm;
       margin: 0 auto;
       gap: 24px;
@@ -230,10 +231,10 @@
 
     .resume-header {
       display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: end;
-      gap: 18px;
-      padding-bottom: 4px;
+      grid-template-columns: 1fr;
+      align-items: start;
+      gap: 8px;
+      padding-bottom: 8px;
       border-bottom: 3px solid var(--navy);
     }
 
@@ -281,7 +282,7 @@
       display: grid;
       grid-template-columns: max-content max-content;
       gap: 3px 10px;
-      justify-content: end;
+      justify-content: start;
       color: #202938;
       font-size: 8.1pt;
       line-height: 1.45;
@@ -920,46 +921,10 @@
         padding: 18px 10px 40px;
       }
 
-      .resume-stack {
-        width: 100%;
-      }
-
-      .resume-page {
-        width: 100%;
-        height: auto;
-        min-height: auto;
-        padding: 24px 20px;
-        overflow: visible;
-      }
-
-      .resume-header,
       .two-col,
       .roadmap,
       .match-grid {
         grid-template-columns: 1fr;
-      }
-
-      .contact {
-        grid-template-columns: 1fr;
-        justify-content: start;
-        text-align: left;
-      }
-
-      .contact > span {
-        grid-template-columns: 2.5em minmax(0, 1fr);
-      }
-
-      .skill-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .job-head {
-        grid-template-columns: 1fr;
-        gap: 1px;
-      }
-
-      .job-head .role {
-        text-align: left;
       }
 
       .hero,
@@ -1008,6 +973,8 @@
       .resume-stack {
         width: 210mm;
         gap: 0;
+        display: block;
+        zoom: 1 !important;
       }
 
       .resume-page {
@@ -2463,203 +2430,81 @@
         localStorage.setItem(performanceMigrationKey, "done");
       }
 
-      // Normalize older locally saved versions into the same two-page A4 hierarchy.
-      function normalizeResumeHierarchy() {
+      // Paginate in document order, measuring the same A4 geometry on every screen.
+      function paginateResume() {
         const resume = main.querySelector("#resume");
         const stack = resume?.querySelector(".resume-stack");
-        const pages = [...(stack?.querySelectorAll(":scope > .resume-page") || [])];
-        const firstPage = pages[0];
-        let secondPage = pages[1];
-        if (!resume || !stack || !firstPage) return false;
-        const before = resume.innerHTML;
-
-        const itemKey = (item) => item.querySelector("b, strong")?.textContent.trim()
-          || item.textContent.trim().split("：")[0];
-        const uniqueItems = (items) => {
-          const seen = new Set();
-          return items.filter((item) => {
-            const key = itemKey(item);
-            if (!key || seen.has(key)) return false;
-            seen.add(key);
-            return true;
-          });
-        };
-
-        [...resume.querySelectorAll(".resume-section-title")]
-          .filter((title) => title.textContent.trim() === "腾讯经历（续）")
-          .forEach((title) => title.remove());
-
-        const tencentTitle = [...resume.querySelectorAll(".resume-section-title")]
-          .find((title) => title.textContent.trim() === "腾讯经历");
-        const tencentSection = tencentTitle?.closest(".resume-section");
-        const tencentJob = tencentSection?.querySelector(".job");
-
-        [...resume.querySelectorAll("[data-resume-project]")].forEach((overflowList) => {
-          const projectKey = overflowList.dataset.resumeProject;
-          const projectLabel = [...resume.querySelectorAll(".project-label")]
-            .find((label) => label.textContent.trim() === projectKey);
-          const projectList = projectLabel?.nextElementSibling;
-          if (projectList?.matches("ul") && projectList !== overflowList) {
-            [...overflowList.children].forEach((item) => projectList.append(item));
-            overflowList.remove();
+        if (!stack || !resume.classList.contains("active")) return;
+        stack.style.removeProperty("zoom");
+        const units = [];
+        const hidden = [];
+        const atomic = ".resume-header, .resume-section-title, .summary-box, .skill-grid, .job-head, .project-label, li, .mini-job, .project-card, .education-row, .footnote";
+        function collect(node, ancestors = []) {
+          if (node.hidden) { hidden.push(node); return; }
+          if (node.matches(atomic) || !node.children.length) {
+            if (node.textContent.trim()) units.push({ node, ancestors });
+            return;
           }
-        });
-
-        const originalTemplate = document.createElement("template");
-        originalTemplate.innerHTML = originalContent;
-        const sourcePaymentLists = [...originalTemplate.content.querySelectorAll("#resume .payment-list")];
-        const sourcePaymentItems = uniqueItems(sourcePaymentLists.flatMap((list) => [...list.children]));
-        const sourcePaymentKeys = sourcePaymentItems.map(itemKey);
-        const paymentLabels = [...resume.querySelectorAll(".project-label")]
-          .filter((label) => label.textContent.includes("QQ×微信支付生态互通"));
-        const paymentLists = [...new Set([
-          ...paymentLabels.map((label) => label.nextElementSibling).filter((list) => list?.matches("ul")),
-          ...resume.querySelectorAll(".payment-list, .payment-overflow")
-        ])];
-        let paymentLabel = paymentLabels.find((label) => tencentJob?.contains(label)) || paymentLabels[0];
-        let paymentList = paymentLabel?.nextElementSibling?.matches("ul")
-          ? paymentLabel.nextElementSibling
-          : paymentLists[0];
-        if (paymentLabel && paymentList && tencentJob) {
-          const currentItems = uniqueItems(paymentLists.flatMap((list) => [...list.children]));
-          const currentByKey = new Map(currentItems.map((item) => [itemKey(item), item]));
-          sourcePaymentItems.forEach((item) => {
-            const key = itemKey(item);
-            if (!currentByKey.has(key)) currentByKey.set(key, item.cloneNode(true));
-          });
-          const orderedItems = [
-            ...sourcePaymentKeys.map((key) => currentByKey.get(key)).filter(Boolean),
-            ...[...currentByKey.entries()]
-              .filter(([key]) => !sourcePaymentKeys.includes(key))
-              .map(([, item]) => item)
-          ];
-          paymentLists.filter((list) => list !== paymentList).forEach((list) => list.remove());
-          paymentLabels.filter((label) => label !== paymentLabel).forEach((label) => label.remove());
-          paymentList.className = "resume-list payment-list";
-          paymentList.replaceChildren(...orderedItems);
-          paymentLabel.insertAdjacentElement("afterend", paymentList);
+          [...node.children].forEach(child => collect(child, [...ancestors, node]));
         }
-
-        [...resume.querySelectorAll("h1, h2, h3, span, div")]
-          .filter((node) => node.textContent.trim().startsWith("QQ消费金融借贷服务平台") && node.children.length === 0)
-          .forEach((title) => {
-            title.classList.remove("resume-section-title");
-            title.classList.add("project-label");
-          });
-        const financeLabels = [...resume.querySelectorAll(".project-label")]
-          .filter((label) => label.textContent.trim().startsWith("QQ消费金融借贷服务平台"));
-        let financeLabel;
-        let financeList;
-        if (financeLabels.length) {
-          financeLabel = financeLabels[0];
-          const financeLists = financeLabels
-            .map((label) => label.nextElementSibling)
-            .filter((list) => list?.matches("ul"));
-          const financeItems = uniqueItems(financeLists.flatMap((list) => [...list.children]));
-          financeLists.filter((list) => list !== financeLabel.nextElementSibling).forEach((list) => list.remove());
-          financeLabels.filter((label) => label !== financeLabel).forEach((label) => label.remove());
-          financeList = financeLabel.nextElementSibling;
-          if (!financeList?.matches("ul")) {
-            financeList = document.createElement("ul");
-            financeLabel.insertAdjacentElement("afterend", financeList);
-          }
-          financeList.className = "resume-list";
-          financeList.replaceChildren(...financeItems);
+        [...stack.children].forEach(page => [...page.children].forEach(node => collect(node)));
+        stack.replaceChildren();
+        let page, copies;
+        function newPage() {
+          page = document.createElement("article");
+          page.className = "resume-page";
+          stack.append(page);
+          copies = new Map();
         }
-
-        if (!secondPage) {
-          secondPage = document.createElement("article");
-          secondPage.className = "resume-page";
-          stack.append(secondPage);
-        }
-        let continuationSection = secondPage.querySelector(":scope > .resume-continuation");
-        if (!continuationSection) {
-          continuationSection = document.createElement("section");
-          continuationSection.className = "resume-section resume-continuation";
-          continuationSection.setAttribute("aria-label", "腾讯经历续页");
-          secondPage.prepend(continuationSection);
-        }
-        if (paymentLabel && paymentList && tencentJob) tencentJob.append(paymentLabel, paymentList);
-        if (financeLabel && financeList) continuationSection.append(financeLabel, financeList);
-
-        const sectionByTitle = (titleText) => [...resume.querySelectorAll(".resume-section")]
-          .find((section) => section.querySelector(":scope > .resume-section-title")?.textContent.trim() === titleText);
-        ["过往经历", "代表项目", "教育背景"].forEach((titleText) => {
-          const section = sectionByTitle(titleText);
-          if (section) secondPage.append(section);
-        });
-        pages.slice(2).forEach((page) => {
-          [...page.querySelectorAll(":scope > .resume-section")].forEach((section) => secondPage.append(section));
-          page.remove();
-        });
-
-        [...resume.querySelectorAll(".resume-section")]
-          .filter((section) => !section.textContent.trim()
-            && !section.hasAttribute("hidden")
-            && !section.matches(".resume-continuation"))
-          .forEach((section) => section.remove());
-        [...resume.querySelectorAll(".resume-section")].forEach((section) => section.removeAttribute("style"));
-
-        const projectPairs = [...resume.querySelectorAll(".project-label")]
-          .map((label) => ({ label, list: label.nextElementSibling }))
-          .filter(({ list }) => list?.matches("ul.resume-list"));
-        projectPairs.forEach(({ label, list }) => tencentJob?.append(label, list));
-
-        const retag = (node, tagName) => {
-          if (!node || node.tagName.toLowerCase() === tagName) return node;
-          const replacement = document.createElement(tagName);
-          [...node.attributes].forEach((attribute) => replacement.setAttribute(attribute.name, attribute.value));
-          replacement.innerHTML = node.innerHTML;
-          node.replaceWith(replacement);
-          return replacement;
-        };
-        [...resume.querySelectorAll(".job-head")].forEach((title) => retag(title, "h3"));
-        [...resume.querySelectorAll(".project-label")].forEach((title) => retag(title, "h4"));
-        [...resume.querySelectorAll(".job-head, .mini-job h3")]
-          .forEach((title) => title.classList.add("resume-subtitle"));
-        [...resume.querySelectorAll(".project-label")]
-          .forEach((title) => title.classList.add("content-title"));
-
-        // Fill page one in document order; only the exact overflowing list items continue on page two.
-        if (tencentJob && secondPage && continuationSection) {
-          stack.classList.add("resume-paginating");
-          const firstPageOverflows = () => {
-            const pageStyle = getComputedStyle(firstPage);
-            const contentBottom = firstPage.getBoundingClientRect().bottom
-              - parseFloat(pageStyle.paddingBottom || "0");
-            return tencentSection.getBoundingClientRect().bottom > contentBottom + 0.5;
-          };
-          const orderedPairs = [...tencentJob.querySelectorAll(":scope > .project-label")]
-            .map((label) => ({ label, list: label.nextElementSibling }))
-            .filter(({ list }) => list?.matches("ul.resume-list"));
-
-          for (let index = orderedPairs.length - 1; index >= 0 && firstPageOverflows(); index -= 1) {
-            const { label, list } = orderedPairs[index];
-            const overflowList = document.createElement("ul");
-            overflowList.className = "resume-list resume-overflow-list";
-            overflowList.dataset.resumeProject = label.textContent.trim();
-
-            while (firstPageOverflows() && list.lastElementChild) {
-              overflowList.prepend(list.lastElementChild);
+        function appendUnit(unit) {
+          let parent = page;
+          unit.ancestors.forEach(source => {
+            if (!copies.has(source)) {
+              const copy = source.cloneNode(false);
+              copy.removeAttribute("id");
+              copy.removeAttribute("style");
+              parent.append(copy);
+              copies.set(source, copy);
             }
-
-            if (!list.children.length && firstPageOverflows()) {
-              list.remove();
-              continuationSection.prepend(label, overflowList);
-            } else if (overflowList.children.length) {
-              continuationSection.prepend(overflowList);
-            }
-
-            if (!overflowList.children.length) overflowList.remove();
-          }
-          stack.classList.remove("resume-paginating");
+            parent = copies.get(source);
+          });
+          parent.append(unit.node);
         }
-
-        return before !== resume.innerHTML;
+        function fits() {
+          const bottom = page.getBoundingClientRect().bottom - parseFloat(getComputedStyle(page).paddingBottom);
+          return [...page.querySelectorAll(atomic)].every(node => node.getBoundingClientRect().bottom <= bottom + 0.5);
+        }
+        function prune() {
+          [...page.querySelectorAll("section, article, ul, div")].reverse().forEach(node => {
+            if (!node.textContent.trim()) node.remove();
+          });
+        }
+        newPage();
+        let pending = [];
+        for (const unit of units) {
+          pending.push(unit);
+          if (unit.node.matches(".resume-section-title, .job-head, .project-label")) continue;
+          const hadContent = page.textContent.trim().length > 0;
+          pending.forEach(appendUnit);
+          if (!fits() && hadContent) {
+            pending.forEach(item => item.node.remove());
+            prune();
+            newPage();
+            pending.forEach(appendUnit);
+          }
+          pending = [];
+        }
+        pending.forEach(appendUnit);
+        hidden.forEach(node => stack.firstElementChild.append(node));
+        fitResumeToScreen();
       }
 
-      const resumeStructureChanged = normalizeResumeHierarchy();
-      if (savedContent && resumeStructureChanged) persistDraft(main.innerHTML);
+      function fitResumeToScreen() {
+        const stack = main.querySelector("#resume .resume-stack");
+        if (!stack) return;
+        const available = main.clientWidth - parseFloat(getComputedStyle(main).paddingLeft) - parseFloat(getComputedStyle(main).paddingRight);
+        stack.style.zoom = Math.min(1, available / (210 * 96 / 25.4));
+      }
 
       saveState.textContent = savedContent ? "已恢复本机保存" : "未修改";
 
@@ -2719,6 +2564,7 @@
           button.setAttribute("aria-current", active ? "page" : "false");
         });
         if (updateHash) history.replaceState(null, "", `#${targetId}`);
+        if (targetId === "resume") paginateResume();
         window.scrollTo({ top: 0, behavior: "instant" });
       }
 
@@ -2731,6 +2577,7 @@
       editButton.addEventListener("click", () => {
         if (editing) saveContent();
         setEditable(!editing);
+        if (!editing) paginateResume();
       });
 
       saveButton.addEventListener("click", () => saveContent());
@@ -2793,6 +2640,10 @@
 
       const initial = location.hash.replace("#", "");
       activate(initial || "resume", false);
+      document.fonts.ready.then(() => paginateResume());
+      window.addEventListener("resize", fitResumeToScreen);
+      window.addEventListener("beforeprint", paginateResume);
+      window.addEventListener("afterprint", fitResumeToScreen);
     })();
   </script>
 </body>

@@ -207,11 +207,25 @@
 
     .resume-page {
       width: 210mm;
+      height: 297mm;
       min-height: 297mm;
       padding: 11mm 14mm;
+      overflow: hidden;
       color: #333d4d;
       background: var(--paper);
       box-shadow: var(--shadow);
+    }
+
+    .resume-stack.resume-paginating {
+      width: 210mm !important;
+    }
+
+    .resume-stack.resume-paginating .resume-page {
+      width: 210mm !important;
+      height: 297mm !important;
+      min-height: 297mm !important;
+      padding: 11mm 14mm !important;
+      overflow: hidden !important;
     }
 
     .resume-header {
@@ -912,8 +926,10 @@
 
       .resume-page {
         width: 100%;
+        height: auto;
         min-height: auto;
         padding: 24px 20px;
+        overflow: visible;
       }
 
       .resume-header,
@@ -996,7 +1012,9 @@
 
       .resume-page {
         width: 210mm;
+        height: 297mm;
         min-height: 297mm;
+        overflow: hidden;
         box-shadow: none;
         page-break-after: always;
         break-after: page;
@@ -2476,6 +2494,17 @@
         const tencentSection = tencentTitle?.closest(".resume-section");
         const tencentJob = tencentSection?.querySelector(".job");
 
+        [...resume.querySelectorAll("[data-resume-project]")].forEach((overflowList) => {
+          const projectKey = overflowList.dataset.resumeProject;
+          const projectLabel = [...resume.querySelectorAll(".project-label")]
+            .find((label) => label.textContent.trim() === projectKey);
+          const projectList = projectLabel?.nextElementSibling;
+          if (projectList?.matches("ul") && projectList !== overflowList) {
+            [...overflowList.children].forEach((item) => projectList.append(item));
+            overflowList.remove();
+          }
+        });
+
         const originalTemplate = document.createElement("template");
         originalTemplate.innerHTML = originalContent;
         const sourcePaymentLists = [...originalTemplate.content.querySelectorAll("#resume .payment-list")];
@@ -2485,7 +2514,7 @@
           .filter((label) => label.textContent.includes("QQ×微信支付生态互通"));
         const paymentLists = [...new Set([
           ...paymentLabels.map((label) => label.nextElementSibling).filter((list) => list?.matches("ul")),
-          ...resume.querySelectorAll(".payment-list")
+          ...resume.querySelectorAll(".payment-list, .payment-overflow")
         ])];
         let paymentLabel = paymentLabels.find((label) => tencentJob?.contains(label)) || paymentLabels[0];
         let paymentList = paymentLabel?.nextElementSibling?.matches("ul")
@@ -2550,7 +2579,7 @@
           continuationSection.setAttribute("aria-label", "腾讯经历续页");
           secondPage.prepend(continuationSection);
         }
-        if (paymentLabel && paymentList) continuationSection.append(paymentLabel, paymentList);
+        if (paymentLabel && paymentList && tencentJob) tencentJob.append(paymentLabel, paymentList);
         if (financeLabel && financeList) continuationSection.append(financeLabel, financeList);
 
         const sectionByTitle = (titleText) => [...resume.querySelectorAll(".resume-section")]
@@ -2565,9 +2594,17 @@
         });
 
         [...resume.querySelectorAll(".resume-section")]
-          .filter((section) => !section.textContent.trim() && !section.hasAttribute("hidden"))
+          .filter((section) => !section.textContent.trim()
+            && !section.hasAttribute("hidden")
+            && !section.matches(".resume-continuation"))
           .forEach((section) => section.remove());
         [...resume.querySelectorAll(".resume-section")].forEach((section) => section.removeAttribute("style"));
+
+        const projectPairs = [...resume.querySelectorAll(".project-label")]
+          .map((label) => ({ label, list: label.nextElementSibling }))
+          .filter(({ list }) => list?.matches("ul.resume-list"));
+        projectPairs.forEach(({ label, list }) => tencentJob?.append(label, list));
+
         const retag = (node, tagName) => {
           if (!node || node.tagName.toLowerCase() === tagName) return node;
           const replacement = document.createElement(tagName);
@@ -2582,6 +2619,41 @@
           .forEach((title) => title.classList.add("resume-subtitle"));
         [...resume.querySelectorAll(".project-label")]
           .forEach((title) => title.classList.add("content-title"));
+
+        // Fill page one in document order; only the exact overflowing list items continue on page two.
+        if (tencentJob && secondPage && continuationSection) {
+          stack.classList.add("resume-paginating");
+          const firstPageOverflows = () => {
+            const pageStyle = getComputedStyle(firstPage);
+            const contentBottom = firstPage.getBoundingClientRect().bottom
+              - parseFloat(pageStyle.paddingBottom || "0");
+            return tencentSection.getBoundingClientRect().bottom > contentBottom + 0.5;
+          };
+          const orderedPairs = [...tencentJob.querySelectorAll(":scope > .project-label")]
+            .map((label) => ({ label, list: label.nextElementSibling }))
+            .filter(({ list }) => list?.matches("ul.resume-list"));
+
+          for (let index = orderedPairs.length - 1; index >= 0 && firstPageOverflows(); index -= 1) {
+            const { label, list } = orderedPairs[index];
+            const overflowList = document.createElement("ul");
+            overflowList.className = "resume-list resume-overflow-list";
+            overflowList.dataset.resumeProject = label.textContent.trim();
+
+            while (firstPageOverflows() && list.lastElementChild) {
+              overflowList.prepend(list.lastElementChild);
+            }
+
+            if (!list.children.length && firstPageOverflows()) {
+              list.remove();
+              continuationSection.prepend(label, overflowList);
+            } else if (overflowList.children.length) {
+              continuationSection.prepend(overflowList);
+            }
+
+            if (!overflowList.children.length) overflowList.remove();
+          }
+          stack.classList.remove("resume-paginating");
+        }
 
         return before !== resume.innerHTML;
       }
